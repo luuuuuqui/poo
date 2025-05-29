@@ -15,6 +15,8 @@ class Circulo:
     def calc_circunferencia(self):
         return 3.141592 * self.__raio * 2
 
+'''
+'''
 class UI:
     @staticmethod
     def menu():
