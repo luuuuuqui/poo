@@ -71,7 +71,6 @@ class UI:
         eq.set_b(float(input("  Informe o valor de b: ")))
         eq.set_c(float(input("  Informe o valor de c: ")))
 
-
         print(f"\nEquação: {eq.get_a()}x² + {eq.get_b()}x + {eq.get_c()}")
         print(f"  Delta: {eq.calc_delta()}")
         print(f"  Tem raízes reais? {'Sim' if eq.temRaizesReais() else 'Não'}.")
