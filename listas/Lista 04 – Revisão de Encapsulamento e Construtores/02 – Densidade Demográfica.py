@@ -42,7 +42,8 @@ class PaísUI:
         op = 0
         while op != 2:
             op = PaísUI.menu()
-            if op == 1: PaísUI.cálculo()
+            match op:
+                case 1: PaísUI.cálculo()
     @staticmethod
     def cálculo():
         p = País()
