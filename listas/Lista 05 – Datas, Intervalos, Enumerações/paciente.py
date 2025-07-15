@@ -91,6 +91,7 @@ class UI:
         print(f' Telefone: ({p.get_telefone()[:2]}) {p.get_telefone()[2:7]}-{p.get_telefone()[7:]}')
         print(f' Data de Nascimento: {p.get_nascimento().strftime("%d/%m/%Y")}')
         print(f' Idade: {p.idade()} anos')
+    @staticmethod
     def paciente():
         p = Paciente()
 
