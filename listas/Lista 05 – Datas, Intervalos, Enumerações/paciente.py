@@ -15,15 +15,14 @@ apresentados no diagrama);
 • Faça uma UI para testar a classe Paciente.
 '''
 
-
 import datetime
 
 class Paciente:
     def __init__(self):
-        self.__nome = ''
-        self.__cpf = ''
-        self.__telefone = ''
-        self.__nascimento = datetime.date(2023, 8, 11) #AAAA-MM-DD
+        self.set_nome('João Pedro Silva de Oliveira')
+        self.set_cpf('33344455566') 
+        self.set_nascimento('19 05 2008')
+        self.set_telefone('84988431104')
     
     def set_nome(self, nome):
         if isinstance(nome, str) and nome.strip():
@@ -53,7 +52,7 @@ class Paciente:
         return self.__telefone
 
     def set_nascimento(self, nascimento):
-        # transforma DD MM AAAA em AAAA-MM-DD
+        # transformar DD MM AAAA em AAAA-MM-DD
         try:
             dia, mes, ano = map(int, nascimento.split())
             self.__nascimento = datetime.date(ano, mes, dia)
@@ -68,14 +67,10 @@ class Paciente:
         idade = hoje.year - self.__nascimento.year
         return idade if (hoje.month, hoje.day) < (self.__nascimento.month, self.__nascimento.day) else idade - 1
 
-
-# dados de joao pedro kkj
-
-
 class UI:
     @staticmethod
     def menu():
-        op = input('\nInforme uma opção:\n  1: Paciente,\n  2: Dados do paciente,\n  9: Fim.\nOpção selecionada: ')
+        op = input('\nInforme uma opção:\n 1: Paciente,\n 2: Dados do paciente,\n 9: Fim.\nOpção selecionada: ')
         if op.isdigit(): return int(op)
         else: return 0
     @staticmethod
@@ -90,16 +85,21 @@ class UI:
     def dadospaciente():
         p = Paciente()
 
-        p.set_nome('João Pedro Silva de Oliveira')
-        p.set_cpf('33344455566') # cpf falso :(
-        p.set_nascimento('19 05 2008')
-        p.set_telefone('84988431104')
-
         print('\nDados do Paciente:')
         print(f' Nome: {p.get_nome()}')
         print(f' CPF: {p.get_cpf()[:3]}.{p.get_cpf()[3:6]}.{p.get_cpf()[6:9]}-{p.get_cpf()[9:]}')
         print(f' Telefone: ({p.get_telefone()[:2]}) {p.get_telefone()[2:7]}-{p.get_telefone()[7:]}')
         print(f' Data de Nascimento: {p.get_nascimento().strftime("%d/%m/%Y")}')
         print(f' Idade: {p.idade()} anos')
+    def paciente():
+        p = Paciente()
 
+        print('\nCadastro de Paciente:')
+
+        p.set_nome(input(' Informe o nome do paciente: '))
+        p.set_cpf(input(' Informe o CPF do paciente (apenas números): '))
+        p.set_nascimento(input(' Informe a data de nascimento do paciente (DD MM AAAA): '))
+        p.set_telefone(input(' Informe o telefone do paciente (apenas números): '))
+
+        print('\nDados atualizados!')
 UI.main()
