@@ -1,0 +1,12 @@
+{
+  "contatos": [
+    {
+      "id": 1,
+      "nome": "João Pedro",
+      "email": "noltib@bentiviado.com",
+      "telefone": "84969696969",
+      "data_nascimento": "07/07/2008"
+    }
+  ],
+  "data_salvamento": "28/07/2025 11:29:35"
+}
