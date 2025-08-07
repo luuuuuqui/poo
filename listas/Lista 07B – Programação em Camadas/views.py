@@ -11,11 +11,11 @@ class View:
 
     @staticmethod
     def contato_atualizar(id, nome, telefone, email, nascimento):
-        return ContatoDAO.contato_atualizar(id, nome, telefone, email, nascimento)
+        return ContatoDAO.atualizar(id, nome, telefone, email, nascimento)
 
     @staticmethod
     def contato_deletar(id):
-        return ContatoDAO.contato_deletar(id)
+        return ContatoDAO.deletar(id)
 
 
 if __name__ == "__main__":

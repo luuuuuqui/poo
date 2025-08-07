@@ -12,10 +12,9 @@ class Contato:
     def __str__(self):
         return f'ID: {self.id} - Nome: {self.nome} - Telefone: {self.telefone} - Email: {self.email} - Nascimento: {self.nascimento.strftime("%d/%m/%Y")}'
 
-
 class ContatoDAO:
     __objetos = []
-
+    
     @classmethod
     def inserir(cls, obj: Contato):
         cls.__abrir() 
@@ -33,22 +32,7 @@ class ContatoDAO:
         return cls.__objetos
 
     @classmethod
-    def __abrir(cls):
-        cls.__objetos = []
-        try:
-            with open('contatos.json', 'r', encoding='utf-8') as file:
-                conteudo = file.read().strip()
-                if not conteudo:
-                    return
-                lista = json.loads(conteudo)
-                for dic in lista:
-                    obj = Contato(dic['id'], dic['nome'], dic['telefone'], dic['email'], dic['nascimento'])
-                    cls.__objetos.append(obj)
-        except FileNotFoundError:
-            pass
-
-    @classmethod
-    def contato_deletar(cls, id):
+    def deletar(cls, id):
         cls.__abrir()
         antes = len(cls.__objetos)
         cls.__objetos = [contato for contato in cls.__objetos if contato.id != id]
@@ -58,7 +42,7 @@ class ContatoDAO:
         return False
 
     @classmethod
-    def contato_atualizar(cls, id, nome, telefone, email, nascimento):
+    def atualizar(cls, id, nome, telefone, email, nascimento):
         cls.__abrir()
         for contato in cls.__objetos:
             if contato.id == id:
@@ -74,6 +58,21 @@ class ContatoDAO:
                 return True
         return False
 
+    @classmethod
+    def __abrir(cls):
+        cls.__objetos = []
+        try:
+            with open('contatos.json', 'r', encoding='utf-8') as file:
+                conteudo = file.read().strip()
+                if not conteudo:
+                    return
+                lista = json.loads(conteudo)
+                for dic in lista:
+                    obj = Contato(dic['id'], dic['nome'], dic['telefone'], dic['email'], dic['nascimento'])
+                    cls.__objetos.append(obj)
+        except FileNotFoundError:
+            pass
+    
     @classmethod
     def __salvar(cls):
         with open('contatos.json', 'w', encoding='utf-8') as arquivo:
