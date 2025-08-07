@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "nome": "João Oliveira",
+        "telefone": "84988431104",
+        "email": "joao.silva3@escolar.ifrn.edu.br",
+        "nascimento": "19/05/2008"
+    },
+    {
+        "id": 2,
+        "nome": "Lucas Duarte",
+        "telefone": "84996115311",
+        "email": "duarte.lucas@escolar.ifrn.edu.br",
+        "nascimento": "04/06/2009"
+    }
+]

@@ -11,14 +11,12 @@ class View:
 
     @staticmethod
     def contato_atualizar(id, nome, telefone, email, nascimento):
-        contatos = ContatoDAO.listar()
-        for contato in contatos:
-            if contato.id == id:
-                contato.nome = nome
-                contato.telefone = telefone
-                contato.email = email
-                contato.nascimento = nascimento
-                ContatoDAO.__salvar()
-                return True
-        return False
-    
+        return ContatoDAO.contato_atualizar(id, nome, telefone, email, nascimento)
+
+    @staticmethod
+    def contato_deletar(id):
+        return ContatoDAO.contato_deletar(id)
+
+
+if __name__ == "__main__":
+    print("Você está executando a View diretamente. Use o módulo UI para interagir com a aplicação.")
