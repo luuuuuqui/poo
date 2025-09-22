@@ -1,4 +1,6 @@
 from models.cliente import Cliente, ClienteDAO
+from models.servico import Servico, ServicoDAO
+
 
 class View:
     def cliente_inserir(nome, email, fone):
@@ -18,3 +20,5 @@ class View:
     def cliente_excluir(id):
         cliente = Cliente(id, "", "", "")
         ClienteDAO.excluir(cliente)    
+
+    
