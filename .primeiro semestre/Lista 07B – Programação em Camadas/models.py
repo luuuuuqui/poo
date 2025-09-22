@@ -75,6 +75,7 @@ class ContatoDAO:
     
     @classmethod
     def __salvar(cls):
+<<<<<<< HEAD:listas/Lista 07B – Programação em Camadas/models.py
         with open('contatos.json', 'w', encoding='utf-8') as arquivo:
             lista = []
             for obj in cls.__objetos:
@@ -90,3 +91,7 @@ class ContatoDAO:
 
 if __name__ == "__main__":
     print("Você está executando o Models diretamente. Use o módulo UI para interagir com a aplicação.")
+=======
+        with open('contatos.json', 'w') as arquivo:
+            json.dump(cls.__objetos, arquivo, default = vars)
+>>>>>>> b943b01 (Add Streamlit app with Bee Movie and Bark scripts, and a narrative on Splat's game journey):.primeiro semestre/Lista 07B – Programação em Camadas/models.py
