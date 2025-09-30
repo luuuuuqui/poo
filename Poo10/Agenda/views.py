@@ -1,6 +1,7 @@
 from models.cliente import Cliente, ClienteDAO
 from models.servico import Servico, ServicoDAO
 from models.profissional import Profissional, ProfissionalDAO
+from models.horario import Horario, HorarioDAO
 
 
 class View:
@@ -76,5 +77,26 @@ class View:
         profissional = Profissional(id, "", "", "")
         ProfissionalDAO.excluir(profissional)
     
-
+    # Horários
+    @staticmethod
+    def horario_inserir(confirmado, datahora, idcliente, idservico, idprofissional):
+        horario = Horario(0, confirmado, datahora, idcliente, idservico, idprofissional)
+        HorarioDAO.inserir(horario)
     
+    @staticmethod
+    def horario_listar():
+        return HorarioDAO.listar()
+    
+    @staticmethod
+    def horario_listar_id(id):
+        return HorarioDAO.listar_id(id)
+    
+    @staticmethod
+    def horario_atualizar(id, confirmado, datahora, idcliente, idservico, idprofissional):
+        horario = Horario(id, confirmado, datahora, idcliente, idservico, idprofissional)
+        HorarioDAO.atualizar(horario)
+
+    @staticmethod
+    def horario_excluir(id):
+        horario = Horario(id, False, None, "", "", "")
+        HorarioDAO.excluir(horario)

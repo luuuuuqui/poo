@@ -31,7 +31,7 @@ class ManterClienteUI:
         if st.button("Inserir"):
             View.cliente_inserir(nome, email, fone)
             st.success("Cliente inserido com sucesso")
-            time.sleep(2)
+            time.sleep(1)
             st.rerun()
 
     @staticmethod
@@ -48,7 +48,7 @@ class ManterClienteUI:
                     id = op.get_id()
                     View.cliente_atualizar(id, nome, email, fone)
                     st.success("Cliente atualizado com sucesso")
-                    time.sleep(2)
+                    time.sleep(1)
                     st.rerun()
 
     @staticmethod
@@ -61,5 +61,5 @@ class ManterClienteUI:
                 id = op.get_id()
                 View.cliente_excluir(id)
                 st.success("Cliente excluído com sucesso")
-                time.sleep(2)
+                time.sleep(1)
                 st.rerun()

@@ -32,7 +32,7 @@ class ManterServicoUI:
         if st.button("Inserir"):
             View.servico_inserir(descricao, valor)
             st.success("Serviço inserido com sucesso")
-            time.sleep(2)
+            time.sleep(1)
             st.rerun()
 
     @staticmethod
@@ -49,7 +49,7 @@ class ManterServicoUI:
                     id = op.get_id()
                     View.servico_atualizar(id, descricao, valor)
                     st.success("Serviço atualizado com sucesso")
-                    time.sleep(2)
+                    time.sleep(1)
                     st.rerun()
 
     @staticmethod
@@ -63,5 +63,5 @@ class ManterServicoUI:
                 id = op.get_id()
                 View.servico_excluir(id)
                 st.success("Serviço excluído com sucesso")
-                time.sleep(2)
+                time.sleep(1)
                 st.rerun()

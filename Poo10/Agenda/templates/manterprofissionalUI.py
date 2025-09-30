@@ -31,7 +31,7 @@ class ManterProfissionalUI:
         if st.button("Inserir"):
             View.profissional_inserir(nome, especialidade, conselho)
             st.success("Profissional inserido com sucesso")
-            time.sleep(2)
+            time.sleep(1)
             st.rerun()
 
     @staticmethod
@@ -48,7 +48,7 @@ class ManterProfissionalUI:
                     id = op.get_id()
                     View.profissional_atualizar(id, nome, especialidade, conselho)
                     st.success("Profissional atualizado com sucesso")
-                    time.sleep(2)
+                    time.sleep(1)
                     st.rerun()
 
     @staticmethod
@@ -61,5 +61,5 @@ class ManterProfissionalUI:
                 id = op.get_id()
                 View.profissional_excluir(id)
                 st.success("Profissional excluído com sucesso")
-                time.sleep(2)
+                time.sleep(1)
                 st.rerun()
