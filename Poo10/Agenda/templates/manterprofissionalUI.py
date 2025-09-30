@@ -20,7 +20,7 @@ class ManterProfissionalUI:
         else:
             list_dic = []
             for obj in profissionais: list_dic.append(obj.to_json())
-            df = pd.DataFrame(list_dic)
+            df = pd.DataFrame(list_dic, hide_index=True)
             st.dataframe(df)
 
     @staticmethod

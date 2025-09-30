@@ -4,7 +4,7 @@ from models.profissional import Profissional, ProfissionalDAO
 
 
 class View:
-    # Nuitka 
+    # Cliente 
     @staticmethod
     def cliente_inserir(nome, email, fone):
         cliente = Cliente(0, nome, email, fone)

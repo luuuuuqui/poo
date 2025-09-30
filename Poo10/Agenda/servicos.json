@@ -8,5 +8,6 @@
 	{"id": 7, "descricao": "recuperação de dados e backup", "valor": 180.0},
 	{"id": 8, "descricao": "suporte técnico remoto", "valor": 50.0},
 	{"id": 9, "descricao": "montagem e upgrade de hardware", "valor": 130.0},
-	{"id": 10, "descricao": "treinamento em informática básica", "valor": 100.0}
+	{"id": 10, "descricao": "treinamento em informática básica", "valor": 100.0},
+	{"id": 11, "descricao": "programa", "valor": 1000.0}
 ]
