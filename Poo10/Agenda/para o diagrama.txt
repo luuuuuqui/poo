@@ -1,0 +1,181 @@
+Diagrama de Classes - Sistema de Agendamento de Serviços
+
+Classe: Cliente
+Atributos:
+- __id
+- __nome
+- __email
+- __fone
+Métodos:
+- __init__(id, nome, email, fone)
+- get_id()
+- get_nome()
+- get_email()
+- get_fone()
+- set_id(id)
+- set_nome(nome)
+- set_email(email)
+- set_fone(fone)
+- __str__()
+
+Classe: ClienteDAO
+Atributos:
+- __objetos
+Métodos:
+- inserir(obj)
+- listar()
+- listar_id(id)
+- atualizar(obj)
+- excluir(obj)
+- abrir()
+- salvar()
+
+Classe: Servico
+Atributos:
+- __id
+- __descricao
+- __valor
+Métodos:
+- __init__(id, descricao, valor)
+- get_id()
+- get_descricao()
+- get_valor()
+- set_id(id)
+- set_descricao(descricao)
+- set_valor(valor)
+- __str__()
+
+Classe: ServicoDAO
+Atributos:
+- __objetos
+Métodos:
+- inserir(obj)
+- listar()
+- listar_id(id)
+- atualizar(obj)
+- excluir(obj)
+- abrir()
+- salvar()
+
+Classe: Profissional
+Atributos:
+- __id
+- __nome
+- __especialidade
+- __conselho
+Métodos:
+- __init__(id, nome, especialidade, conselho)
+- get_id()
+- get_nome()
+- get_especialidade()
+- get_conselho()
+- set_id(id)
+- set_nome(nome)
+- set_especialidade(especialidade)
+- set_conselho(conselho)
+- __str__()
+
+Classe: ProfissionalDAO
+Atributos:
+- __objetos
+Métodos:
+- inserir(obj)
+- listar()
+- listar_id(id)
+- atualizar(obj)
+- excluir(obj)
+- abrir()
+- salvar()
+
+Classe: Horario
+Atributos:
+- __id
+- __confirmado
+- __datahora
+- __idcliente
+- __idservico
+- __idprofissional
+Métodos:
+- __init__(id, confirmado, datahora, cliente, servico, profissional)
+- get_id()
+- get_confirmado()
+- get_datahora()
+- get_idcliente()
+- get_idservico()
+- get_idprofissional()
+- set_id(id)
+- set_confirmado(confirmado)
+- set_datahora(datahora)
+- set_idcliente(cliente)
+- set_idservico(servico)
+- set_idprofissional(profissional)
+- __str__()
+- to_json(obj)
+- from_json(dic)
+
+Classe: HorarioDAO
+Atributos:
+- __objetos
+Métodos:
+- inserir(obj)
+- listar()
+- listar_id(id)
+- atualizar(obj)
+- excluir(obj)
+- abrir()
+- salvar()
+
+Classe: View
+Métodos:
+- cliente_inserir(nome, email, fone)
+- cliente_listar()
+- cliente_listar_id(id)
+- cliente_atualizar(id, nome, email, fone)
+- cliente_excluir(id)
+- servico_inserir(descricao, valor)
+- servico_listar()
+- servico_listar_id(id)
+- servico_atualizar(id, descricao, valor)
+- servico_excluir(id)
+- profissional_inserir(nome, especialidade, conselho)
+- profissional_listar()
+- profissional_listar_id(id)
+- profissional_atualizar(id, nome, especialidade, conselho)
+- profissional_excluir(id)
+- horario_inserir(confirmado, datahora, idcliente, idservico, idprofissional)
+- horario_listar()
+- horario_listar_id(id)
+- horario_atualizar(id, confirmado, datahora, idcliente, idservico, idprofissional)
+- horario_excluir(id)
+
+Classe: ManterClienteUI
+Métodos:
+- main()
+- listar()
+- inserir()
+- atualizar()
+- excluir()
+
+Classe: ManterServicoUI
+Métodos:
+- main()
+- listar()
+- inserir()
+- atualizar()
+- excluir()
+
+Classe: ManterProfissionalUI
+Métodos:
+- main()
+- listar()
+- inserir()
+- atualizar()
+- excluir()
+
+Classe: ManterHorarioUI
+Métodos:
+- main()
+- listar()
+- inserir()
+- atualizar()
+- excluir()

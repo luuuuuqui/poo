@@ -24,13 +24,26 @@ class Horario:
     def set_idservico(self, servico: str) -> None: self.__idservico = servico
     def set_idprofissional(self, profissional: str) -> None: self.__idprofissional = profissional
 
-    def to_json(self) -> dict:
-        dic = {"id":self.__id, "confirmado":self.__confirmado, "datahora":self.__datahora, "cliente":self.__idcliente, "servico":self.__idservico, "profissional":self.__idprofissional}
+    @staticmethod
+    def to_json(obj) -> dict:
+        if not isinstance(obj, Horario):
+            raise TypeError("Objeto não é do tipo Horario")
+        dic = {
+            "id": obj.get_id(),
+            "confirmado": obj.get_confirmado(),
+            "datahora": obj.get_datahora().isoformat() if obj.get_datahora() else None,
+            "cliente": obj.get_idcliente(),
+            "servico": obj.get_idservico(),
+            "profissional": obj.get_idprofissional()
+        }
         return dic
     
     @staticmethod
     def from_json(dic) -> object:
-        return Horario(dic["id"], dic["confirmado"], dic["datahora"], dic["cliente"], dic["servico"], dic["profissional"])
+        datahora = None
+        if dic["datahora"]:
+            datahora = datetime.datetime.fromisoformat(dic["datahora"])
+        return Horario(dic["id"], dic["confirmado"], datahora, dic["cliente"], dic["servico"], dic["profissional"])
 
     def __str__(self) -> str:
         return f"{self.__id} - {self.__confirmado} - {self.__datahora} - {self.__idcliente} - {self.__idservico} - {self.__idprofissional}"
@@ -90,5 +103,5 @@ class HorarioDAO():
     @classmethod
     def salvar(cls) -> None:
         with open("horarios.json", mode="w") as arquivo:
-            json.dump(cls.__objetos, arquivo, default = Horario.to_json)  
+            json.dump(cls.__objetos, arquivo, default = Horario.to_json)
 
