@@ -1,0 +1,177 @@
+# Diagrama de Classes - Atributos e Métodos
+
+## Classe Cliente
+- __id: int
+- __nome: str
+- __email: str
+- __fone: str
++ get_id(): int
++ set_id(id): None
++ get_nome(): str
++ set_nome(nome): None
++ get_email(): str
++ set_email(email): None
++ get_fone(): str
++ set_fone(fone): None
++ to_json(): dict
++ from_json(dic): Cliente
++ __str__(): str
+
+## Classe ClienteDAO
+- __objetos: list
++ inserir(obj): None
++ listar(): list
++ listar_id(id): object
++ atualizar(obj): None
++ excluir(obj): None
++ abrir(): None
++ salvar(): None
+
+---
+
+## Classe Servico
+- __id: int
+- __descricao: str
+- __valor: float
++ get_id(): int
++ set_id(id:int): None
++ get_descricao(): str
++ set_descricao(descricao:str): None
++ get_valor(): float
++ set_valor(valor:float): None
++ to_json(): dict
++ from_json(dic): Servico
++ __str__(): str
+
+## Classe ServicoDAO
+- __objetos: list
++ inserir(obj:Servico): None
++ listar(): list
++ listar_id(id:int): object
++ atualizar(obj:Servico): None
++ excluir(obj:Servico): None
++ abrir(): None
++ salvar(): None
+
+---
+
+## Classe Profissional
+- __id: int
+- __nome: str
+- __especialidade: str
+- __conselho: str
++ get_id(): int
++ set_id(id): None
++ get_nome(): str
++ set_nome(nome): None
++ get_especialidade(): str
++ set_especialidade(especialidade): None
++ get_conselho(): str
++ set_conselho(conselho): None
++ to_json(): dict
++ from_json(dic): Profissional
++ __str__(): str
+
+## Classe ProfissionalDAO
+- __objetos: list
++ inserir(obj): None
++ listar(): list
++ listar_id(id): object
++ atualizar(obj): None
++ excluir(obj): None
++ abrir(): None
++ salvar(): None
+
+---
+
+## Classe Horario
+- __id: int
+- __confirmado: bool
+- __datahora: datetime.datetime
+- __idcliente: str
+- __idservico: str
+- __idprofissional: str
++ get_id(): int
++ set_id(id:int): None
++ get_confirmado(): bool
++ set_confirmado(confirmado:bool): None
++ get_datahora(): datetime.datetime
++ set_datahora(datahora:datetime.datetime): None
++ get_idcliente(): str
++ set_idcliente(cliente:str): None
++ get_idservico(): str
++ set_idservico(servico:str): None
++ get_idprofissional(): str
++ set_idprofissional(profissional:str): None
++ to_json(obj): dict
++ from_json(dic): Horario
++ __str__(): str
+
+## Classe HorarioDAO
+- __objetos: list
++ inserir(obj): None
++ listar(): list
++ listar_id(id): object
++ atualizar(obj): None
++ excluir(obj): None
++ abrir(): None
++ salvar(): None
+
+---
+
+## Classe View
++ cliente_inserir(nome, email, fone): None
++ cliente_listar(): list
++ cliente_listar_id(id): object
++ cliente_atualizar(id, nome, email, fone): None
++ cliente_excluir(id): None
++ servico_inserir(descricao, valor): None
++ servico_listar(): list
++ servico_listar_id(id): object
++ servico_atualizar(id, descricao, valor): None
++ servico_excluir(id): None
++ profissional_inserir(nome, especialidade, conselho): None
++ profissional_listar(): list
++ profissional_listar_id(id): object
++ profissional_atualizar(id, nome, especialidade, conselho): None
++ profissional_excluir(id): None
++ horario_inserir(confirmado, datahora, idcliente, idservico, idprofissional): None
++ horario_listar(): list
++ horario_listar_id(id): object
++ horario_atualizar(id, confirmado, datahora, idcliente, idservico, idprofissional): None
++ horario_excluir(id): None
+
+---
+
+## Classe IndexUI
++ menu_admin(): None
++ sidebar(): None
++ main(): None
+
+## Classe ManterClienteUI
++ main(): None
++ listar(): None
++ inserir(): None
++ atualizar(): None
++ excluir(): None
+
+## Classe ManterServicoUI
++ main(): None
++ listar(): None
++ inserir(): None
++ atualizar(): None
++ excluir(): None
+
+## Classe ManterProfissionalUI
++ main(): None
++ listar(): None
++ inserir(): None
++ atualizar(): None
++ excluir(): None
+
+## Classe ManterHorarioUI
++ main(): None
++ listar(): None
++ inserir(): None
++ atualizar(): None
++ excluir(): None
