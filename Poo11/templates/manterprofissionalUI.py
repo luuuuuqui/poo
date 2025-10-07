@@ -26,10 +26,12 @@ class ManterProfissionalUI:
     @staticmethod
     def inserir():
         nome = st.text_input("Informe o nome")
+        email = st.text_input("Informe o e-mail")
+        senha = st.text_input("Informe a senha", type="password")
         especialidade = st.text_input("Informe o especialidade")
         conselho = st.text_input("Informe o conselho")
         if st.button("Inserir"):
-            View.profissional_inserir(nome, especialidade, conselho)
+            View.profissional_inserir(nome, email, senha, especialidade, conselho)
             st.success("Profissional inserido com sucesso")
             time.sleep(1)
             st.rerun()
@@ -42,11 +44,13 @@ class ManterProfissionalUI:
             op = st.selectbox("Atualização de Profissionais", profissionais, format_func=lambda x: str(x))
             if op is not None:
                 nome = st.text_input("Informe o novo nome", op.get_nome())
+                email = st.text_input("Informe o novo e-mail", op.get_email())
+                senha = st.text_input("Informe a nova senha", op.get_senha(), type="password")
                 especialidade = st.text_input("Informe a nova especialidade", op.get_especialidade())
                 conselho = st.text_input("Informe o novo conselho", op.get_conselho())
                 if st.button("Atualizar"):
                     id = op.get_id()
-                    View.profissional_atualizar(id, nome, especialidade, conselho)
+                    View.profissional_atualizar(id, nome, email, senha, especialidade, conselho)
                     st.success("Profissional atualizado com sucesso")
                     time.sleep(1)
                     st.rerun()

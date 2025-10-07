@@ -1,33 +1,35 @@
 import json
 
 class Cliente:
-    def __init__(self, id: int, nome: str, email: str, fone: str):
-
+    def __init__(self, id, nome, email, fone, senha):
         self.set_id(id)
         self.set_nome(nome)
         self.set_email(email)
         self.set_fone(fone)
+        self.set_senha(senha)
     
     def get_id(self) -> int: return self.__id
     def get_nome(self) -> str: return self.__nome
     def get_email(self) -> str: return self.__email
     def get_fone(self) -> str: return self.__fone
+    def get_senha(self) -> str: return self.__senha
 
     def set_id(self, id) -> None: self.__id = id
     def set_nome(self, nome) -> None: self.__nome = nome
     def set_email(self, email) -> None: self.__email = email
     def set_fone(self, fone) -> None: self.__fone = fone
+    def set_senha(self, senha) -> None: self.__senha = senha
 
     def to_json(self) -> dict:
-        dic = {"id":self.__id, "nome":self.__nome, "email":self.__email, "fone":self.__fone}
+        dic = {"id":self.__id, "nome":self.__nome, "email":self.__email, "fone":self.__fone, "senha":self.__senha}
         return dic
     
     @staticmethod
     def from_json(dic) -> object:
-        return Cliente(dic["id"], dic["nome"], dic["email"], dic["fone"])
+        return Cliente(dic["id"], dic["nome"], dic["email"], dic["fone"], dic["senha"])
 
     def __str__(self) -> str:
-        return f"{self.__id} - {self.__nome} - {self.__email} - {self.__fone}"
+        return f"{self.__id} - {self.__nome} - {self.__email} - {self.__fone} - {self.__senha}"
 
 class ClienteDAO():
     __objetos = []

@@ -28,10 +28,11 @@ class ManterClienteUI:
         nome = st.text_input("Informe o nome")
         email = st.text_input("Informe o e-mail")
         fone = st.text_input("Informe o fone")
+        senha = st.text_input("Informe a senha", type="password")
         if st.button("Inserir"):
-            View.cliente_inserir(nome, email, fone)
+            View.cliente_inserir(nome, email, fone, senha)
             st.success("Cliente inserido com sucesso")
-            time.sleep(1)
+            time.sleep(2)
             st.rerun()
 
     @staticmethod
@@ -39,18 +40,16 @@ class ManterClienteUI:
         clientes = View.cliente_listar()
         if len(clientes) == 0: st.write("Nenhum cliente cadastrado")
         else:
-            op = st.selectbox("Atualização de Clientes", clientes, format_func=lambda x: str(x))
-            if op is not None:
-                nome = st.text_input("Informe o novo nome", op.get_nome())
-                email = st.text_input("Informe o novo e-mail", op.get_email())
-                fone = st.text_input("Informe o novo fone", op.get_fone())
-                if st.button("Atualizar"):
-                    id = op.get_id()
-                    View.cliente_atualizar(id, nome, email, fone)
-                    st.success("Cliente atualizado com sucesso")
-                    time.sleep(1)
-                    st.rerun()
-
+            op = st.selectbox("Atualização de Clientes", clientes)
+            nome = st.text_input("Novo nome", op.get_nome())
+            email = st.text_input("Novo e-mail", op.get_email())
+            fone = st.text_input("Novo fone", op.get_fone())
+            senha = st.text_input("Nova senha", op.get_senha(), type="password")
+        if st.button("Atualizar"):
+            id = op.get_id()
+            View.cliente_atualizar(id, nome, email, fone, senha)
+            st.success("Cliente atualizado com sucesso")
+            
     @staticmethod
     def excluir():
         clientes = View.cliente_listar()
