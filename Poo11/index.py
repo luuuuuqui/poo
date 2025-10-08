@@ -28,7 +28,8 @@ class IndexUI:
     def menu_profissional():
         op = st.sidebar.selectbox("Menu", ["Meus Dados", "Horários"])
         match op:
-            case "Meus Dados": PerfilClienteUI.main()
+            case "Meus Dados": PerfilProfissionalUI.main()
+            case "Horários": st.text("essa parte eu não fiz ainda. kjj")
 
 
     @staticmethod
