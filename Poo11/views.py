@@ -5,6 +5,21 @@ from models.horario import Horario, HorarioDAO
 
 
 class View:
+    # autenticação
+    @staticmethod
+    def autenticar(email, senha):
+        resultado = View.cliente_autenticar(email, senha)
+        if resultado:
+            resultado["tipo"] = "cliente"
+            resultado["id"] = resultado["id"]
+            return resultado
+        
+        resultado = View.profissional_autenticar(email, senha)
+        if resultado:
+            resultado["tipo"] = "profissional"
+            resultado["id"] = resultado["id"]
+            return resultado
+
     # Cliente 
     @staticmethod
     def cliente_inserir(nome, email, fone, senha):
@@ -89,6 +104,13 @@ class View:
     def profissional_excluir(id):
         profissional = Profissional(id, "", "", "", "", "")
         ProfissionalDAO.excluir(profissional)
+
+    @staticmethod
+    def profissional_autenticar(email, senha):
+        for usuario in View.profissional_listar():
+            if usuario.get_email() == email and usuario.get_senha() == senha:
+                return {"id": usuario.get_id(), "nome": usuario.get_nome()}
+        return None
     
     # Horários
     @staticmethod
@@ -113,3 +135,5 @@ class View:
     def horario_excluir(id):
         horario = Horario(id, False, None, "", "", "")
         HorarioDAO.excluir(horario)
+
+    
