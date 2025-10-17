@@ -12,5 +12,5 @@ class AbrirContaUI:
         if st.button("Inserir"):
             View.cliente_inserir(nome, email, fone, senha)
             st.success("Conta criada com sucesso")
-            time.sleep(2)
+            time.sleep(1)
             st.rerun()

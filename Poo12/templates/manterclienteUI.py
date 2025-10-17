@@ -49,7 +49,7 @@ class ManterClienteUI:
             id = op.get_id()
             View.cliente_atualizar(id, nome, email, fone, senha)
             st.success("Cliente atualizado com sucesso")
-            
+    
     @staticmethod
     def excluir():
         clientes = View.cliente_listar()

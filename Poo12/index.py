@@ -6,6 +6,7 @@ from templates.abrircontaUI import AbrirContaUI
 from templates.loginUI import LoginUI
 from templates.perfilclienteUI import PerfilClienteUI
 from templates.perfilprofissionalUI import PerfilProfissionalUI
+from templates.agendarservicoUI import AgendarServicoUI
 
 from views import View
 import streamlit as st
@@ -20,17 +21,17 @@ class IndexUI:
 
     @staticmethod
     def menu_cliente():
-        op = st.sidebar.selectbox("Menu", ["Meus Dados"])
-        match op:
-            case "Meus Dados": PerfilClienteUI.main()
+        op = st.sidebar.selectbox("Menu", ["Meus Dados", "Agendar Serviço"])
+        if op == "Meus Dados": PerfilClienteUI.main()
+        if op == "Agendar Serviço": AgendarServicoUI.main()
     
     @staticmethod
     def menu_profissional():
-        op = st.sidebar.selectbox("Menu", ["Meus Dados", "Horários"])
+        op = st.sidebar.selectbox("Menu", ["Meus Dados", "Horários", "Criar Horário"])
         match op:
             case "Meus Dados": PerfilProfissionalUI.main()
-            case "Horários": st.text("essa parte eu não fiz ainda. kjj")
-
+            case "Horários": PerfilProfissionalUI.horarios()
+            case "Criar Horário": PerfilProfissionalUI.abrir_agenda()
 
     @staticmethod
     def menu_admin():
