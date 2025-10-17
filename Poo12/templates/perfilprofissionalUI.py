@@ -29,19 +29,25 @@ class PerfilProfissionalUI:
             list_dic = []
             clientes = {c.get_id(): c.get_nome() for c in View.cliente_listar()}
             servicos = {s.get_id(): s.get_descricao() for s in View.servico_listar()}
-            for obj in horarios:
-                if obj.get_idprofissional() != st.session_state["usuario_id"]:
-                    continue
-                dic = {
-                    "id": obj.get_id(),
-                    "confirmado": obj.get_confirmado(),
-                    "datahora": obj.get_datahora().strftime("%d/%m/%Y %H:%M") if obj.get_datahora() else "",
-                    "cliente": clientes.get(obj.get_idcliente(), obj.get_idcliente()),
-                    "servico": servicos.get(obj.get_idservico(), obj.get_idservico()),
-                }
-                list_dic.append(dic)
-            df = pd.DataFrame(list_dic)
-            st.dataframe(df, hide_index=True)
+
+            horarios = View.horario_listar_profissional(st.session_state["usuario_id"])
+            if len(horarios) == 0: 
+                st.write("Nenhum horário cadastrado")
+            else:
+                list_dic = []
+                clientes = {c.get_id(): c.get_nome() for c in View.cliente_listar()}
+                servicos = {s.get_id(): s.get_descricao() for s in View.servico_listar()}
+                for obj in horarios:
+                    dic = {
+                        "id": obj.get_id(),
+                        "confirmado": obj.get_confirmado(),
+                        "datahora": obj.get_datahora().strftime("%d/%m/%Y %H:%M") if obj.get_datahora() else "",
+                        "cliente": clientes.get(obj.get_idcliente(), obj.get_idcliente()),
+                        "servico": servicos.get(obj.get_idservico(), obj.get_idservico()),
+                    }
+                    list_dic.append(dic)
+                df = pd.DataFrame(list_dic)
+                st.dataframe(df, hide_index=True)
 
     def abrir_agenda():
         st.header("Criar Horário")
@@ -67,5 +73,34 @@ class PerfilProfissionalUI:
             st.text("inicio = " + str(inicio))
 
             st.success("Horário inserido com sucesso")
-            #time.sleep(1)
-            #st.rerun()
+            time.sleep(1)
+            st.rerun()
+
+    def confirmar():
+        st.header("Confirmar Horários")
+
+        horarios = []
+        for horario in View.horario_listar_profissional(st.session_state["usuario_id"]):
+            if not horario.get_confirmado() and horario.get_idcliente() is not None:
+                horarios.append(horario)
+
+        if len(horarios) == 0:
+            st.write("Nenhum horário cadastrado")
+        else:
+            op = st.selectbox("Atualização de Horários", horarios, format_func=lambda x: str(x))
+            if op is not None:
+                clientes = View.cliente_listar()
+                cliente_index = next((i for i, c in enumerate(clientes) if c.get_id() == op.get_idcliente()), 0)
+                cliente = st.selectbox(
+                    "Selecione o cliente", clientes, 
+                    index=cliente_index,
+                    format_func=lambda x: str(x),
+                    key=f"cliente_{op.get_id()}",
+                    disabled=True
+                )
+
+                if st.button("Confirmar", key=f"btn_atualizar_{op.get_id()}"):
+                    View.horario_atualizar(op.get_id(), True, datahora, cliente.get_id(), servico.get_id(), profissional.get_id())
+                    st.success("Horário atualizado com sucesso")
+                    time.sleep(1)
+                    st.rerun()

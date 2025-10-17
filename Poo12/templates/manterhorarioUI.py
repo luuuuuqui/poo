@@ -97,24 +97,30 @@ class ManterHorarioUI:
                 datahora = None
                 if d is not None and t is not None:
                     datahora = datetime.datetime(d.year, d.month, d.day, t.hour, t.minute, t.second)
+                
                 clientes = View.cliente_listar()
+                cliente_index = next((i for i, c in enumerate(clientes) if c.get_id() == op.get_idcliente()), 0)
                 cliente = st.selectbox(
                     "Selecione o cliente", clientes, 
-                    index=[i for i, c in enumerate(clientes) if c.get_id() == op.get_idcliente()][0] if clientes else 0, 
+                    index=cliente_index,
                     format_func=lambda x: str(x),
                     key=f"cliente_{op.get_id()}"
                 )
+
                 servicos = View.servico_listar()
+                servico_index = next((i for i, s in enumerate(servicos) if s.get_id() == op.get_idservico()), 0)
                 servico = st.selectbox(
                     "Selecione o serviço", servicos, 
-                    index=[i for i, s in enumerate(servicos) if s.get_id() == op.get_idservico()][0] if servicos else 0, 
+                    index=servico_index,
                     format_func=lambda x: str(x),
                     key=f"servico_{op.get_id()}"
                 )
+
                 profissionais = View.profissional_listar()
+                profissional_index = next((i for i, p in enumerate(profissionais) if p.get_id() == op.get_idprofissional()), 0)
                 profissional = st.selectbox(
                     "Selecione o profissional", profissionais, 
-                    index=[i for i, p in enumerate(profissionais) if p.get_id() == op.get_idprofissional()][0] if profissionais else 0, 
+                    index=profissional_index,
                     format_func=lambda x: str(x),
                     key=f"profissional_{op.get_id()}"
                 )

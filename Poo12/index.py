@@ -21,16 +21,18 @@ class IndexUI:
 
     @staticmethod
     def menu_cliente():
-        op = st.sidebar.selectbox("Menu", ["Meus Dados", "Agendar Serviço"])
-        if op == "Meus Dados": PerfilClienteUI.main()
-        if op == "Agendar Serviço": AgendarServicoUI.main()
-    
+        op = st.sidebar.selectbox("Menu", ["Meus Dados", "Meus Serviços"])
+        match op:
+            case "Meus Dados": PerfilClienteUI.main()
+            case "Meus Serviços": PerfilClienteUI.meus_servicos()
+
     @staticmethod
     def menu_profissional():
-        op = st.sidebar.selectbox("Menu", ["Meus Dados", "Horários", "Criar Horário"])
+        op = st.sidebar.selectbox("Menu", ["Meus Dados", "Horários", "Confirmar", "Criar Horário"])
         match op:
             case "Meus Dados": PerfilProfissionalUI.main()
             case "Horários": PerfilProfissionalUI.horarios()
+            case "Confirmar": PerfilProfissionalUI.confirmar()
             case "Criar Horário": PerfilProfissionalUI.abrir_agenda()
 
     @staticmethod
@@ -62,7 +64,7 @@ class IndexUI:
             elif tipo_usuario == "profissional":
                 IndexUI.menu_profissional()
             else: IndexUI.menu_cliente()
-        IndexUI.sair_do_sistema()
+            IndexUI.sair_do_sistema()
 
     @staticmethod
     def main():

@@ -1,1 +1,16 @@
-[{"id": 1, "nome": "admin", "email": "admin", "fone": "fone", "senha": "1234"}, {"id": 2, "nome": "Maria Nilma da Silva", "email": "nilmafotos@example.com", "fone": "84987505750", "senha": "4321"}]
+[
+    {
+        "id": 0,
+        "nome": "admin",
+        "email": "admin",
+        "fone": "fone",
+        "senha": "1234"
+    },
+    {
+        "id": 1,
+        "nome": "Maria Nilma da Silva",
+        "email": "nilmafotos@example.com",
+        "fone": "fone",
+        "senha": "1234"
+    }
+]

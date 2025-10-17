@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 from views import View
 
 class PerfilClienteUI:
@@ -14,3 +15,24 @@ class PerfilClienteUI:
             id = op.get_id()
             View.cliente_atualizar(id, nome, email, fone, senha)
             st.success("Seus dados foram atualizados com sucesso.")
+    
+    def meus_servicos():
+        st.header("Meus Serviços")
+        horarios = View.horario_listar_cliente(st.session_state["usuario_id"])
+        if len(horarios) == 0: 
+            st.write("Nenhum horário cadastrado")
+        else:
+            list_dic = []
+            servicos = {s.get_id(): s.get_descricao() for s in View.servico_listar()}
+            profissionais = {p.get_id(): p.get_nome() for p in View.profissional_listar()}
+            for obj in horarios:
+                dic = {
+                    "id": obj.get_id(),
+                    "confirmado": obj.get_confirmado(),
+                    "datahora": obj.get_datahora().strftime("%d/%m/%Y %H:%M") if obj.get_datahora() else "",
+                    "servico": servicos.get(obj.get_idservico(), obj.get_idservico()),
+                    "profissional": profissionais.get(obj.get_idprofissional(), obj.get_idprofissional())
+                }
+                list_dic.append(dic)
+            df = pd.DataFrame(list_dic)
+            st.dataframe(df, hide_index=True)

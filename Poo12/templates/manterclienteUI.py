@@ -41,9 +41,10 @@ class ManterClienteUI:
         if len(clientes) == 0: st.write("Nenhum cliente cadastrado")
         else:
             op = st.selectbox("Atualização de Clientes", clientes)
-            nome = st.text_input("Novo nome", op.get_nome())
-            email = st.text_input("Novo e-mail", op.get_email())
-            fone = st.text_input("Novo fone", op.get_fone())
+            if st.session_state["usuario_id"] != op.get_id():
+                nome = st.text_input("Novo nome", op.get_nome())
+                email = st.text_input("Novo e-mail", op.get_email())
+                fone = st.text_input("Novo fone", op.get_fone())
             senha = st.text_input("Nova senha", op.get_senha(), type="password")
         if st.button("Atualizar"):
             id = op.get_id()

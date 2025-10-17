@@ -62,6 +62,16 @@ class View:
         ):
             View.cliente_inserir("admin", "admin", "fone", "1234")
 
+    @classmethod
+    def cliente_admin_criar(cls):
+        # Verifica se já existe um admin
+        clientes = cls.cliente_listar()
+        admin_exists = any(c.get_email() == "admin" for c in clientes)
+
+        if not admin_exists:
+            # Cria o admin apenas se não existir
+            cls.cliente_inserir("Administrador", "admin", "admin")
+
     # Serviços
     @staticmethod
     def servico_inserir(descricao, valor):
@@ -136,6 +146,22 @@ class View:
     @staticmethod
     def horario_listar_id(id):
         return HorarioDAO.listar_id(id)
+
+    @staticmethod
+    def horario_listar_cliente(id_cliente):
+        r = []
+        for h in View.horario_listar():
+            if h.get_idcliente() == id_cliente:
+                r.append(h)
+        return r
+
+    @staticmethod
+    def horario_listar_profissional(id_profissional):
+        r = []
+        for h in View.horario_listar():
+            if h.get_idprofissional() == id_profissional:
+                r.append(h)
+        return r
 
     @staticmethod
     def horario_atualizar(
