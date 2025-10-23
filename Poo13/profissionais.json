@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "nome": "Raysa Ribeiro Guloso",
+        "email": "rribeiro@example.com",
+        "senha": "1234",
+        "especialidade": "computaria",
+        "conselho": "sim"
+    },
+    {
+        "id": 2,
+        "nome": "hgfdshjkjhgf",
+        "email": "dfghjknjbvfdsdfghasdfgh",
+        "senha": "asvbjkj",
+        "especialidade": "",
+        "conselho": ""
+    },
+    {
+        "id": 3,
+        "nome": "asdfghjk",
+        "email": "dfghjknjbvfdsdfghasdfghasasd",
+        "senha": "asvbjkj",
+        "especialidade": "",
+        "conselho": ""
+    }
+]

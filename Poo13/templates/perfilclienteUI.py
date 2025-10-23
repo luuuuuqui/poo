@@ -13,8 +13,9 @@ class PerfilClienteUI:
 
         if st.button("Atualizar"):
             id = op.get_id()
-            View.cliente_atualizar(id, nome, email, fone, senha)
-            st.success("Seus dados foram atualizados com sucesso.")
+            if View.cliente_atualizar(id, nome, email, fone, senha):
+                st.success("Seus dados foram atualizados com sucesso.")
+            else: st.error("Erro ao atualizar seus dados. Tente novamente.")
     
     def meus_servicos():
         st.header("Meus Serviços")

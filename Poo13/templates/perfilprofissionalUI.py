@@ -17,7 +17,11 @@ class PerfilProfissionalUI:
 
         if st.button("Atualizar"):
             id = op.get_id()
-            View.profissional_atualizar(id, nome, email, especialidade, conselho, senha)
+            try: View.profissional_atualizar(id, nome, email, especialidade, conselho, senha)
+            except ValueError as e:
+                st.error(f"Erro ao atualizar seus dados: {e}")
+            else:
+                st.success("Seus dados foram atualizados com sucesso.")
             st.success("Seus dados foram atualizados com sucesso.")
     
     def horarios():
@@ -85,10 +89,12 @@ class PerfilProfissionalUI:
                 horarios.append(horario)
 
         if len(horarios) == 0:
-            st.write("Nenhum horário cadastrado")
+            st.write("Nenhum horário para confirmar.")
         else:
             op = st.selectbox("Atualização de Horários", horarios, format_func=lambda x: str(x))
             if op is not None:
+                op = View.horario_listar_id(op.get_id())
+
                 clientes = View.cliente_listar()
                 cliente_index = next((i for i, c in enumerate(clientes) if c.get_id() == op.get_idcliente()), 0)
                 cliente = st.selectbox(
@@ -100,7 +106,7 @@ class PerfilProfissionalUI:
                 )
 
                 if st.button("Confirmar", key=f"btn_atualizar_{op.get_id()}"):
-                    View.horario_atualizar(op.get_id(), True, datahora, cliente.get_id(), servico.get_id(), profissional.get_id())
+                    View.horario_atualizar(op.get_id(), True, op.get_datahora(), cliente.get_id(), op.get_idservico(), op.get_idprofissional())
                     st.success("Horário atualizado com sucesso")
                     time.sleep(1)
                     st.rerun()

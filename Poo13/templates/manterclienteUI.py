@@ -30,8 +30,12 @@ class ManterClienteUI:
         fone = st.text_input("Informe o fone")
         senha = st.text_input("Informe a senha", type="password")
         if st.button("Inserir"):
-            View.cliente_inserir(nome, email, fone, senha)
-            st.success("Cliente inserido com sucesso")
+            try:
+                View.cliente_inserir(nome, email, fone, senha)
+            except Exception as e:
+                st.error("Erro ao inserir cliente: {}".format(e))
+            else:
+                st.success("Cliente inserido com sucesso")
             time.sleep(2)
             st.rerun()
 
@@ -48,9 +52,10 @@ class ManterClienteUI:
             senha = st.text_input("Nova senha", op.get_senha(), type="password")
         if st.button("Atualizar"):
             id = op.get_id()
-            View.cliente_atualizar(id, nome, email, fone, senha)
-            st.success("Cliente atualizado com sucesso")
-    
+            if View.cliente_atualizar(id, nome, email, fone, senha):
+                st.success("Cliente atualizado com sucesso")
+            else: st.error("Erro ao atualizar cliente. Tente novamente.")
+
     @staticmethod
     def excluir():
         clientes = View.cliente_listar()
@@ -59,7 +64,8 @@ class ManterClienteUI:
             op = st.selectbox("Exclusão de Clientes", clientes, format_func=lambda x: str(x))
             if op is not None and st.button("Excluir"):
                 id = op.get_id()
-                View.cliente_excluir(id)
-                st.success("Cliente excluído com sucesso")
+                if View.cliente_excluir(id):
+                    st.success("Cliente excluído com sucesso")
+                else: st.error("Erro ao excluir cliente. Tente novamente.")
                 time.sleep(1)
                 st.rerun()

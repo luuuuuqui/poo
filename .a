@@ -1,0 +1,41 @@
+Tarefa 1. Validação do modelo, operações e UIs dos clientes
+Na classe Cliente:
+1. Encapsular todos os atributos da classe;
+2. Escrever métodos de acesso get/set para os atributos;
+3. Lançar exceções para clientes sem nome, sem e-mail ou sem senha.
+
+Na classe View, lançar exceções ao:
+1. Validar as operações de inserir e atualizar cliente para não permitir duas pessoas com o mesmo e-mail (clientes
+e/ou profissionais), nem com o e-mail “admin”, reservado para o administrador;
+2. Validar a operação de excluir um cliente, impossibilitando a remoção de clientes que tenham agendado um horário.
+
+Nas classes de UI (Abrir Conta, Manter Cliente e Perfil do Cliente):
+1. Tratar as exceções nas operações relacionadas aos clientes.
+
+Tarefa 2. Validação do modelo, operações e UIs dos profissionais
+Na classe Profissional:
+1. Encapsular todos os atributos da classe;
+2. Escrever métodos de acesso get/set para os atributos;
+3. Lançar exceções para profissionais sem nome, sem e-mail ou sem senha.
+
+Na classe View, lançar exceções ao:
+1. Validar as operações de inserir e atualizar profissionais para não permitir duas pessoas com o mesmo e-mail
+(clientes e/ou profissionais), nem com o e-mail “admin”, reservado para o administrador;
+2. Validar a operação de excluir um profissional, impossibilitando a remoção de profissionais que tenham cadastrado
+um horário.
+Nas classes de UI (Manter Profissional e Perfil do Profissional):
+1. Tratar as exceções nas operações relacionadas aos profissionais.
+
+Tarefa 3. Validação do modelo, operações e UIs relacionadas aos horários
+Na classe Horário:
+1. Encapsular todos os atributos da classe;
+2. Escrever métodos de acesso get/set para os atributos;
+3. Lançar exceções para horários com data anterior ao ano 2025.
+
+Na classe View, lançar exceções ao:
+1. Validar as operações de inserir e atualizar horários para não permitir dois horários com a mesma data e hora para
+o mesmo profissional;
+2. Validar a operação de excluir um horário, impossibilitando a remoção de horários que já tenham sido agendados
+por um cliente.
+Nas classes de UI (Manter Horário e Abrir Agenda):
+1. Tratar as exceções nas operações relacionadas aos horários.

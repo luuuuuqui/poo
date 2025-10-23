@@ -66,10 +66,13 @@ class ManterHorarioUI:
             st.warning("Preencha todos os campos")
         
         if st.button("Inserir"):
-            View.horario_inserir(confirmado, datahora, cliente.get_id(), servico.get_id(), profissional.get_id())
-            st.success("Horário inserido com sucesso")
-            time.sleep(1)
-            st.rerun()
+            try: View.horario_inserir(confirmado, datahora, cliente.get_id(), servico.get_id(), profissional.get_id())
+            except ValueError as e:
+                st.error(f"Erro ao inserir horário: {e}")
+            else:
+                st.success("Horário inserido com sucesso")
+                time.sleep(1)
+                st.rerun()
 
     @staticmethod
     def atualizar():
@@ -129,8 +132,11 @@ class ManterHorarioUI:
                     st.warning("Preencha todos os campos")
                 
                 elif st.button("Atualizar", key=f"btn_atualizar_{op.get_id()}"):
-                    View.horario_atualizar(op.get_id(), confirmado, datahora, cliente.get_id(), servico.get_id(), profissional.get_id())
-                    st.success("Horário atualizado com sucesso")
+                    try: View.horario_atualizar(op.get_id(), confirmado, datahora, cliente.get_id(), servico.get_id(), profissional.get_id())
+                    except ValueError as e:
+                        st.error(f"Erro ao atualizar horário: {e}")
+                    else:
+                        st.success("Horário atualizado com sucesso")
                     time.sleep(1)
                     st.rerun()
 
@@ -142,7 +148,10 @@ class ManterHorarioUI:
             op = st.selectbox("Exclusão de Horarios", horarios, format_func=lambda x: str(x))
             if op is not None and st.button("Excluir"):
                 id = op.get_id()
-                View.horario_excluir(id)
-                st.success("Horario excluído com sucesso")
+                try: View.horario_excluir(id)
+                except ValueError as e:
+                    st.error(f"Erro ao excluir horário: {e}")
+                else:
+                    st.success("Horário excluído com sucesso")
                 time.sleep(1)
                 st.rerun()

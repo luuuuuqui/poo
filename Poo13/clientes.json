@@ -12,5 +12,12 @@
         "email": "nilmafotos@example.com",
         "fone": "fone",
         "senha": "1234"
+    },
+    {
+        "id": 2,
+        "nome": "hgfdshjkjhgf",
+        "email": "dfghjknjbvfdsdfgh",
+        "fone": "sshjhgfdss",
+        "senha": "asvbjkj"
     }
 ]

@@ -3,6 +3,8 @@ import datetime
 
 class Horario:
     def __init__(self, id: int, confirmado: bool, datahora: datetime.datetime, cliente: str, servico: str, profissional: str) -> None:
+        if datahora < datetime.datetime(2025, 1, 1) and datahora is not None:
+            raise ValueError("datahora deve ser um objeto datetime.datetime ou None.")
         self.set_id(id)
         self.set_confirmado(confirmado)
         self.set_datahora(datahora)

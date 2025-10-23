@@ -24,8 +24,16 @@ class View:
 
     # Cliente
     @staticmethod
-    def cliente_inserir(nome, email, fone, senha):
-        cliente = Cliente(0, nome, email, fone, senha)
+    def cliente_inserir(nome: str, email: str, fone: str, senha: str):
+        for c in View.cliente_listar() + View.profissional_listar():
+            if c.get_email().lower().strip() == email.lower().strip():
+                raise ValueError("Email já cadastrado.")
+        if email.lower().strip() == "admin":
+            raise ValueError("Email já cadastrado.")
+        try:
+            cliente = Cliente(0, nome, email, fone, senha)
+        except ValueError as ve:
+            raise ve
         ClienteDAO.inserir(cliente)
 
     @staticmethod
@@ -45,6 +53,8 @@ class View:
 
     @staticmethod
     def cliente_excluir(id):
+        if any(h.get_idcliente() == id for h in HorarioDAO.listar()):
+            raise ValueError("Cliente possui horários agendados e não pode ser excluído.")
         cliente = Cliente(id, "", "", "", "")
         ClienteDAO.excluir(cliente)
 
@@ -64,12 +74,10 @@ class View:
 
     @classmethod
     def cliente_admin_criar(cls):
-        # Verifica se já existe um admin
         clientes = cls.cliente_listar()
         admin_exists = any(c.get_email() == "admin" for c in clientes)
 
         if not admin_exists:
-            # Cria o admin apenas se não existir
             cls.cliente_inserir("Administrador", "admin", "admin")
 
     # Serviços
@@ -101,7 +109,14 @@ class View:
     # Profissionais
     @staticmethod
     def profissional_inserir(nome, email, senha, especialidade, conselho):
-        profissional = Profissional(0, nome, email, senha, especialidade, conselho)
+        for c in View.cliente_listar() + View.profissional_listar():
+            if c.get_email().lower().strip() == email.lower().strip():
+                raise ValueError("Email já cadastrado.")
+        if email.lower().strip() == "admin":
+            raise ValueError("Email já cadastrado.")
+        try: profissional = Profissional(0, nome, email, senha, especialidade, conselho)
+        except ValueError as ve:
+            raise ve
         ProfissionalDAO.inserir(profissional)
 
     @staticmethod
@@ -121,6 +136,8 @@ class View:
 
     @staticmethod
     def profissional_excluir(id):
+        if any(h.get_idprofissional() == id for h in HorarioDAO.listar()):
+            raise ValueError("Profissional possui horários agendados e não pode ser excluído.")
         profissional = Profissional(id, "", "", "", "", "")
         ProfissionalDAO.excluir(profissional)
 
@@ -134,6 +151,8 @@ class View:
     # Horários
     @staticmethod
     def horario_inserir(confirmado, datahora, idcliente, idservico, idprofissional):
+        if any(h.get_idprofissional() == idprofissional and h.get_datahora() == datahora for h in HorarioDAO.listar()):
+            raise ValueError("Esse profissional já possui um horário agendado para esta data e hora.")
         horario = Horario(0, confirmado, datahora, idcliente, idservico, idprofissional)
         HorarioDAO.inserir(horario)
 
@@ -174,6 +193,8 @@ class View:
 
     @staticmethod
     def horario_excluir(id):
+        if View.horario_listar_id(id).get_idcliente() is not None:
+            raise ValueError("Horário está agendado por um cliente.")
         horario = Horario(id, False, None, "", "", "")
         HorarioDAO.excluir(horario)
 

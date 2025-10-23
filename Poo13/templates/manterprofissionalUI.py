@@ -31,8 +31,11 @@ class ManterProfissionalUI:
         especialidade = st.text_input("Informe o especialidade")
         conselho = st.text_input("Informe o conselho")
         if st.button("Inserir"):
-            View.profissional_inserir(nome, email, senha, especialidade, conselho)
-            st.success("Profissional inserido com sucesso")
+            try: View.profissional_inserir(nome, email, senha, especialidade, conselho)
+            except ValueError as e:
+                st.error(f"Erro ao inserir profissional: {e}")
+            else:
+                st.success("Profissional inserido com sucesso")
             time.sleep(1)
             st.rerun()
 
@@ -63,7 +66,10 @@ class ManterProfissionalUI:
             op = st.selectbox("Exclusão de Profissionais", profissionais, format_func=lambda x: str(x))
             if op is not None and st.button("Excluir"):
                 id = op.get_id()
-                View.profissional_excluir(id)
-                st.success("Profissional excluído com sucesso")
+                try: View.profissional_excluir(id)
+                except ValueError as e:
+                    st.error(f"Erro ao excluir profissional: {e}")
+                else:
+                    st.success("Profissional excluído com sucesso")
                 time.sleep(1)
                 st.rerun()
