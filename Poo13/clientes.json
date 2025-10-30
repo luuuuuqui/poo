@@ -4,20 +4,23 @@
         "nome": "admin",
         "email": "admin",
         "fone": "fone",
-        "senha": "1234"
+        "senha": "1234",
+        "nascimento": "1970-01-01T00:00:00"
     },
     {
         "id": 1,
         "nome": "Maria Nilma da Silva",
         "email": "nilmafotos@example.com",
         "fone": "fone",
-        "senha": "1234"
+        "senha": "1234",
+        "nascimento": "1985-01-29T00:00:00"
     },
     {
         "id": 2,
         "nome": "hgfdshjkjhgf",
         "email": "dfghjknjbvfdsdfgh",
         "fone": "sshjhgfdss",
-        "senha": "asvbjkj"
+        "senha": "asvbjkj",
+        "nascimento": "1990-11-03T00:00:00"
     }
 ]

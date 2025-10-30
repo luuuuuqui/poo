@@ -1,5 +1,6 @@
 import json
 import datetime
+from dao import DAO
 
 class Horario:
     def __init__(self, id: int, confirmado: bool, datahora: datetime.datetime, cliente: str, servico: str, profissional: str) -> None:
@@ -50,60 +51,21 @@ class Horario:
     def __str__(self) -> str:
         return f"{self.__id} - {self.__confirmado} - {self.__datahora} - {self.__idcliente} - {self.__idservico} - {self.__idprofissional}"
 
-class HorarioDAO():
-    __objetos = []
-
-    @classmethod
-    def inserir(cls, obj) -> None:
-        cls.abrir()
-        id = 0
-        for aux in cls.__objetos:
-            if aux.get_id() > id: id = aux.get_id()
-        obj.set_id(id + 1)
-        cls.__objetos.append(obj)
-        cls.salvar()
-
-    @classmethod
-    def listar(cls) -> list:
-        cls.abrir()
-        return cls.__objetos
-
-    @classmethod
-    def listar_id(cls, id) -> object:
-        cls.abrir()
-        for obj in cls.__objetos: 
-            if obj.get_id() == id: return obj
-        return None
-
-    @classmethod
-    def atualizar(cls, obj) -> None:
-        aux = cls.listar_id(obj.get_id())
-        if aux != None:
-            cls.__objetos.remove(aux)
-            cls.__objetos.append(obj)
-            cls.salvar()
-
-    @classmethod
-    def excluir(cls, obj) -> None:
-        aux = cls.listar_id(obj.get_id())
-        if aux != None:
-            cls.__objetos.remove(aux)
-            cls.salvar()
-
+class HorarioDAO(DAO):
     @classmethod
     def abrir(cls) -> None:
-        cls.__objetos = []
+        cls._objetos = []
         try:
             with open("horarios.json", mode="r") as arquivo:
                 list_dic = json.load(arquivo)
                 for dic in list_dic:
                     obj = Horario.from_json(dic)
-                    cls.__objetos.append(obj)
+                    cls._objetos.append(obj)
         except FileNotFoundError:
             pass
 
     @classmethod
     def salvar(cls) -> None:
         with open("horarios.json", mode="w") as arquivo:
-            json.dump(cls.__objetos, arquivo, default = Horario.to_json)
+            json.dump(cls._objetos, arquivo, default = Horario.to_json)
 

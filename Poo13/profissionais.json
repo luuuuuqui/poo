@@ -5,7 +5,8 @@
         "email": "rribeiro@example.com",
         "senha": "1234",
         "especialidade": "computaria",
-        "conselho": "sim"
+        "conselho": "sim",
+        "nascimento": "1982-07-15T00:00:00"
     },
     {
         "id": 2,
@@ -13,7 +14,8 @@
         "email": "dfghjknjbvfdsdfghasdfgh",
         "senha": "asvbjkj",
         "especialidade": "",
-        "conselho": ""
+        "conselho": "",
+        "nascimento": null
     },
     {
         "id": 3,
@@ -21,6 +23,7 @@
         "email": "dfghjknjbvfdsdfghasdfghasasd",
         "senha": "asvbjkj",
         "especialidade": "",
-        "conselho": ""
+        "conselho": "",
+        "nascimento": "1995-02-28T00:00:00"
     }
 ]
