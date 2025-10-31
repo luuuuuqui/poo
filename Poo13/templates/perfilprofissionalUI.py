@@ -17,12 +17,12 @@ class PerfilProfissionalUI:
 
         if st.button("Atualizar"):
             id = op.get_id()
-            try: View.profissional_atualizar(id, nome, email, especialidade, conselho, senha)
+            try: 
+                View.profissional_atualizar(id, nome, email, especialidade, conselho, senha)
             except ValueError as e:
                 st.error(f"Erro ao atualizar seus dados: {e}")
             else:
                 st.success("Seus dados foram atualizados com sucesso.")
-            st.success("Seus dados foram atualizados com sucesso.")
     
     def horarios():
         st.header("Meus Horários")
@@ -66,19 +66,19 @@ class PerfilProfissionalUI:
         
         
         if st.button("Inserir"):
-            inicio_dt = datetime.datetime.combine(datetime.date.today(), inicio)
-            
-            delta_intervalo = datetime.timedelta(hours=intervalo.hour, minutes=intervalo.minute)
-            
-            while inicio_dt.time() <= (datetime.datetime.combine(dia, fim) - delta_intervalo).time():
-                View.horario_inserir(False, datetime.datetime.combine(dia, inicio_dt.time()), None, None, op.get_id())
-                inicio_dt += delta_intervalo
-            st.text("x = " + str(inicio_dt.time()))
-            st.text("inicio = " + str(inicio))
-
-            st.success("Horário inserido com sucesso")
-            time.sleep(1)
-            st.rerun()
+            try:
+                inicio_dt = datetime.datetime.combine(datetime.date.today(), inicio)
+                delta_intervalo = datetime.timedelta(hours=intervalo.hour, minutes=intervalo.minute)
+                
+                while inicio_dt.time() <= (datetime.datetime.combine(dia, fim) - delta_intervalo).time():
+                    View.horario_inserir(False, datetime.datetime.combine(dia, inicio_dt.time()), None, None, op.get_id())
+                    inicio_dt += delta_intervalo
+                st.success("Horário inserido com sucesso")
+            except ValueError as e:
+                st.error(f"Erro ao inserir horário: {e}")
+            else:
+                time.sleep(1)
+                st.rerun()
 
     def confirmar():
         st.header("Confirmar Horários")
@@ -106,7 +106,13 @@ class PerfilProfissionalUI:
                 )
 
                 if st.button("Confirmar", key=f"btn_atualizar_{op.get_id()}"):
-                    View.horario_atualizar(op.get_id(), True, op.get_datahora(), cliente.get_id(), op.get_idservico(), op.get_idprofissional())
-                    st.success("Horário atualizado com sucesso")
-                    time.sleep(1)
-                    st.rerun()
+                    try:
+                        View.horario_atualizar(op.get_id(), True, op.get_datahora(), 
+                                                 cliente.get_id(), op.get_idservico(), 
+                                                 op.get_idprofissional())
+                    except ValueError as e:
+                        st.error(f"Erro ao atualizar o horário: {e}")
+                    else:
+                        st.success("Horário atualizado com sucesso")
+                        time.sleep(1)
+                        st.rerun())

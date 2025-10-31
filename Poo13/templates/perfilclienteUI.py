@@ -12,10 +12,14 @@ class PerfilClienteUI:
         senha = st.text_input("Informe a nova senha", op.get_senha(), type="password")
 
         if st.button("Atualizar"):
-            id = op.get_id()
-            if View.cliente_atualizar(id, nome, email, fone, senha):
-                st.success("Seus dados foram atualizados com sucesso.")
-            else: st.error("Erro ao atualizar seus dados. Tente novamente.")
+            try:
+                View.cliente_atualizar(op.get_id(), nome, email, fone, senha)
+                st.success("Dados atualizados com sucesso")
+            except ValueError as e:
+                st.error(f"Erro ao atualizar dados: {e}")
+            else:
+                time.sleep(1)
+                st.rerun()
     
     def meus_servicos():
         st.header("Meus Serviços")
