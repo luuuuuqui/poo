@@ -1,6 +1,6 @@
 import json
 from datetime import datetime
-from dao import DAO
+from .dao import DAO
 
 class Profissional:
     def __init__(self, id: int, nome: str, email: str, senha: str, especialidade: str, conselho: str, nascimento: datetime = None):

@@ -10,7 +10,7 @@ class AbrirContaUI:
         fone = st.text_input("Informe o fone")
         senha = st.text_input("Informe a senha", type="password")
         if st.button("Inserir"):
-            try: View.cliente_inserir(nome, email, fone, senha):
+            try: View.cliente_inserir(nome, email, fone, senha)
             except ValueError as e:
                 st.error(f"Erro ao criar conta: {e}")
             else:

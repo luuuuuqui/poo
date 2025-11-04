@@ -2,16 +2,18 @@ import streamlit as st
 import pandas as pd
 from views import View 
 import time
+from datetime import datetime as dt
 
 class ManterProfissionalUI:
     @staticmethod
     def main():
         st.header("Cadastro de Profissionais")
-        tab1, tab2, tab3, tab4 = st.tabs(["Listar", "Inserir", "Atualizar", "Excluir"])
+        tab1, tab2, tab3, tab4, tab5 = st.tabs(["Listar", "Inserir", "Atualizar", "Excluir", "Aniversariantes"])
         with tab1: ManterProfissionalUI.listar()
         with tab2: ManterProfissionalUI.inserir()
         with tab3: ManterProfissionalUI.atualizar()
         with tab4: ManterProfissionalUI.excluir()
+        with tab5: ManterProfissionalUI.aniversarios()
 
     @staticmethod
     def listar():
@@ -73,3 +75,25 @@ class ManterProfissionalUI:
                     st.success("Profissional excluído com sucesso")
                 time.sleep(1)
                 st.rerun()
+
+    @staticmethod
+    def aniversarios():
+        if any(dt.now().strftime("%d/%m") == a['nascimento'][0:5] for a in View.profissional_listar_aniversariantes(0)):
+            
+            f = []
+
+            st.write(f"Aniversariantes do dia: {dt.today().strftime('%d/%m')}")
+            for a in aniversarios:
+                if dt.now().strftime("%d/%m") == a['nascimento'][0:5]:
+                    st.markdown(f"- {a['nome']}")
+
+        st.header("Profissionais Aniversariantes do Mês")
+        aniversarios = View.profissional_listar_aniversariantes(mes)
+        meses = ["Todos", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
+        mes = st.selectbox("Selecione o mês", range(len(meses)), format_func=lambda x: meses[x])
+
+        if len(aniversarios) == 0:
+            st.write("Nenhum profissional faz aniversário neste mês.")
+        else:
+            df = pd.DataFrame(aniversarios)
+            st.dataframe(df, hide_index=True)

@@ -1,6 +1,6 @@
 import json
 from datetime import datetime
-from dao import DAO
+from .dao import DAO
 
 class Cliente:
     def __init__(self, id: int, nome: str, email: str, fone: str, senha: str, nascimento: datetime):
@@ -51,13 +51,13 @@ class Cliente:
 class ClienteDAO(DAO):
     @classmethod
     def abrir(cls) -> None:
-        cls._objetos = []
+        DAO._objetos = []
         try:
             with open("clientes.json", mode="r") as arquivo:
                 list_dic = json.load(arquivo)
                 for dic in list_dic:
                     obj = Cliente.from_json(dic)
-                    cls.__objetos.append(obj)
+                    DAO._objetos.append(obj)
         except FileNotFoundError:
             pass
 

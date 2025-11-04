@@ -147,6 +147,21 @@ class View:
             if usuario.get_email() == email and usuario.get_senha() == senha:
                 return {"id": usuario.get_id(), "nome": usuario.get_nome()}
         return None
+    
+    @staticmethod
+    def profissional_listar_aniversariantes(mes):
+        profissionais = View.profissional_listar()
+        r = []
+        for p in profissionais:
+            nascimento = p.get_nascimento()
+            if nascimento and (mes == 0 or nascimento.month == mes):
+                r.append({
+                    "id": p.get_id(),
+                    "nome": p.get_nome(),
+                    "nascimento": nascimento.strftime("%d/%m/%Y"),
+                    "idade": f'{(datetime.now() - nascimento).days // 365} anos'
+                })
+        return sorted(r, key=lambda d: (d['nascimento'].split('/')[1], d['nascimento'].split('/')[0]))
 
     # Horários
     @staticmethod

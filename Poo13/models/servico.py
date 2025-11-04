@@ -1,5 +1,5 @@
 import json
-from dao import DAO
+from .dao import DAO
 
 class Servico:
     def __init__(self, id: int, descricao: str, valor: float):

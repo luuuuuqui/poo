@@ -107,12 +107,10 @@ class PerfilProfissionalUI:
 
                 if st.button("Confirmar", key=f"btn_atualizar_{op.get_id()}"):
                     try:
-                        View.horario_atualizar(op.get_id(), True, op.get_datahora(), 
-                                                 cliente.get_id(), op.get_idservico(), 
-                                                 op.get_idprofissional())
+                        View.horario_atualizar(op.get_id(), True, op.get_datahora(), cliente.get_id(), op.get_idservico(), op.get_idprofissional())
                     except ValueError as e:
                         st.error(f"Erro ao atualizar o horário: {e}")
                     else:
                         st.success("Horário atualizado com sucesso")
                         time.sleep(1)
-                        st.rerun())
+                        st.rerun()

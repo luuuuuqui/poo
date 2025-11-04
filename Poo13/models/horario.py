@@ -1,6 +1,6 @@
 import json
 import datetime
-from dao import DAO
+from .dao import DAO
 
 class Horario:
     def __init__(self, id: int, confirmado: bool, datahora: datetime.datetime, cliente: str, servico: str, profissional: str) -> None:
