@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-from sympy import N
 from views import View
 import time
 from datetime import datetime as dt

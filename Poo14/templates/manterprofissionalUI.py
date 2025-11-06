@@ -54,7 +54,7 @@ class ManterProfissionalUI:
                 senha = st.text_input("Informe a nova senha", op.get_senha(), type="password")
                 especialidade = st.text_input("Informe a nova especialidade", op.get_especialidade())
                 conselho = st.text_input("Informe o novo conselho", op.get_conselho())
-                nascimento = dt.combine(st.date_input(label="Informe a data de nascimento"), dt.min.time())
+                nascimento = dt.combine(st.date_input(label="Informe a data de nascimento", key="profissional_nascimento_update", format="DD/MM/YYYY", value=op.get_nascimento()), dt.min.time())
                 if st.button("Atualizar"):
                     id = op.get_id()
                     View.profissional_atualizar(id, nome, email, senha, especialidade, conselho, nascimento)
@@ -81,11 +81,23 @@ class ManterProfissionalUI:
     @staticmethod
     def aniversarios():
         if any(dt.now().strftime("%d/%m") == a['nascimento'][0:5] for a in View.profissional_listar_aniversariantes(0)):
-            st.write(f"Aniversariantes do dia: {dt.today().strftime('%d/%m')}")
+            st.header(f"Aniversariantes do dia: {dt.today().strftime('%d/%m/%Y')}")
+            
             for a in View.profissional_listar_aniversariantes(dt.now().month):
                 if dt.now().strftime("%d/%m") == a['nascimento'][0:5]:
-                    st.markdown(f"- {a['nome']}")
-
+                    col1, col2 = st.columns([3, 1])
+                    
+                    with col1:
+                        st.markdown(f"- {a['nome']} - {a['idade']}")
+                    
+                    with col2:
+                        email = str(View.profissional_listar_id(a["id"])).split(" - ")[2]
+                        nome = a['nome']
+                        
+                        st.link_button("Enviar email", f"mailto:{email}?subject=Feliz Aniversário!&body=Feliz Aniversário, {nome.split()[0]}!", use_container_width=True)
+                    
+                    
+        
         st.header("Profissionais Aniversariantes do Mês")
         meses = ["Todos", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
         mes = st.selectbox("Selecione o mês", range(len(meses)), format_func=lambda x: meses[x])

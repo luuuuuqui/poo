@@ -1,11 +1,13 @@
 import json
-import datetime
+from datetime import datetime as dt
 from .dao import DAO
 
 class Horario:
-    def __init__(self, id: int, confirmado: bool, datahora: datetime.datetime, cliente: str, servico: str, profissional: str) -> None:
-        if datahora < datetime.datetime(2025, 1, 1) and datahora is not None:
-            raise ValueError("datahora deve ser um objeto datetime.datetime ou None.")
+    def __init__(self, id: int, confirmado: bool, datahora: dt, cliente: str, servico: str, profissional: str) -> None:
+        if datahora is None:
+            raise ValueError("Datahora deve ser preenchido.")
+        if not isinstance(datahora, dt):
+            raise ValueError("Datahora deve ser uma data.")
         self.set_id(id)
         self.set_confirmado(confirmado)
         self.set_datahora(datahora)
@@ -15,14 +17,14 @@ class Horario:
     
     def get_id(self) -> int: return self.__id
     def get_confirmado(self) -> bool: return self.__confirmado
-    def get_datahora(self) -> datetime.datetime: return self.__datahora
+    def get_datahora(self) -> dt: return self.__datahora
     def get_idcliente(self) -> str: return self.__idcliente
     def get_idservico(self) -> str: return self.__idservico
     def get_idprofissional(self) -> str: return self.__idprofissional
 
     def set_id(self, id: int) -> None: self.__id = id
     def set_confirmado(self, confirmado: bool) -> None: self.__confirmado = confirmado
-    def set_datahora(self, datahora: datetime.datetime) -> None: self.__datahora = datahora
+    def set_datahora(self, datahora: dt) -> None: self.__datahora = datahora
     def set_idcliente(self, cliente: str) -> None: self.__idcliente = cliente
     def set_idservico(self, servico: str) -> None: self.__idservico = servico
     def set_idprofissional(self, profissional: str) -> None: self.__idprofissional = profissional
@@ -44,8 +46,8 @@ class Horario:
     @staticmethod
     def from_json(dic) -> object:
         if dic["datahora"]:
-            datahora = datetime.datetime.fromisoformat(dic["datahora"])
-        return Horario(dic["id"], dic["confirmado"], dic["datahora"], dic["cliente"], dic["servico"], dic["profissional"])
+            datahora = dt.fromisoformat(dic["datahora"])
+        return Horario(dic["id"], dic["confirmado"], datahora, dic["cliente"], dic["servico"], dic["profissional"])
 
     def __str__(self) -> str:
         return f"{self.__id} - {self.__confirmado} - {self.__datahora} - {self.__idcliente} - {self.__idservico} - {self.__idprofissional}"

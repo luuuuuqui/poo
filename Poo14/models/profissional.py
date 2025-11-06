@@ -1,9 +1,9 @@
 import json
-from datetime import datetime
+from datetime import datetime as dt
 from .dao import DAO
 
 class Profissional:
-    def __init__(self, id: int, nome: str, email: str, senha: str, especialidade: str, conselho: str, nascimento: datetime):
+    def __init__(self, id: int, nome: str, email: str, senha: str, especialidade: str, conselho: str, nascimento: dt):
         if nome is None or not str(nome).strip():
             raise ValueError("Nome deve ser preenchido.")
         if email is None or not str(email).strip():
@@ -11,9 +11,12 @@ class Profissional:
         if senha is None or not str(senha).strip():
             raise ValueError("Senha deve ser preenchida.")
         # nascimento opcional (permite usar objetos placeholder em excluir/atualizar)
-        if nascimento is not None:
-            if not isinstance(nascimento, datetime) or datetime.now() < nascimento:
-                raise ValueError("Nascimento deve ser uma data válida no passado.")
+        if nascimento is None:
+            raise ValueError("Nascimento deve ser preenchido.")
+        if not isinstance(nascimento, dt):
+            raise ValueError("Nascimento deve ser uma data.")
+        if nascimento >= dt.now():
+            raise ValueError("Nascimento deve ser uma data no passado.")
         self.set_id(id)
         self.set_nome(nome)
         self.set_email(email)
@@ -28,7 +31,7 @@ class Profissional:
     def get_senha(self) -> str: return self.__senha
     def get_especialidade(self) -> str: return self.__especialidade
     def get_conselho(self) -> str: return self.__conselho
-    def get_nascimento(self) -> datetime: return self.__nascimento
+    def get_nascimento(self) -> dt: return self.__nascimento
 
     def set_id(self, id) -> None: self.__id = id
     def set_nome(self, nome) -> None: self.__nome = nome
@@ -46,16 +49,15 @@ class Profissional:
             "senha": self.__senha,
             "especialidade": self.__especialidade,
             "conselho": self.__conselho,
-            "nascimento": self.__nascimento.isoformat() if self.__nascimento else None
+            "nascimento": self.__nascimento
         }
         return dic
     
     @staticmethod
     def from_json(dic) -> object:
-        nascimento = None
-        if dic.get("nascimento"):
-            nascimento = datetime.fromisoformat(dic["nascimento"])
-        return Profissional(dic["id"], dic["nome"], dic["email"], dic["senha"], dic["especialidade"], dic["conselho"], dic["nascimento"])
+        if isinstance(dic["nascimento"], str):
+            nasc = dt.fromisoformat(dic["nascimento"])
+        return Profissional(dic["id"], dic["nome"], dic["email"], dic["senha"], dic["especialidade"], dic["conselho"], nasc)
 
     def __str__(self) -> str:
         return f"{self.__id} - {self.__nome} - {self.__email} - {self.__senha} - {self.__especialidade} - {self.__conselho} - {self.__nascimento}"
