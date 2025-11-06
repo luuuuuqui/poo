@@ -28,7 +28,7 @@ class AgendarServicoUI:
                         try:
                             View.horario_atualizar(
                                 horario.get_id(),
-                                horario.get_data(),
+                                horario.get_confirmado(),
                                 horario.get_datahora(),
                                 st.session_state["usuario_id"],
                                 servico.get_id(),

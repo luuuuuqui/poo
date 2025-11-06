@@ -100,9 +100,10 @@ class PerfilProfissionalUI:
         delta_intervalo = st.time_input("Intervalo entre atendimentos (hh:mm):", value=None)
         
         if not (dia and inicio and fim and delta_intervalo):
-            raise ValueError("Preencha todos os campos de data e hora.")
-
-        if st.button("Inserir"):
+            st.error("Preencha todos os campos de data e hora.")
+        
+        
+        if st.button(label="Inserir"):
             try:
                 inicio_atendimentos = datetime.datetime.combine(datetime.date.today(), inicio)
                 delta_intervalo = datetime.timedelta(
@@ -127,6 +128,7 @@ class PerfilProfissionalUI:
             else:
                 time.sleep(1)
                 st.rerun()
+
 
     @staticmethod
     def confirmar():
