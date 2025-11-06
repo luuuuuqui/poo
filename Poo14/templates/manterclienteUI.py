@@ -31,7 +31,7 @@ class ManterClienteUI:
         email = st.text_input("Informe o e-mail")
         fone = st.text_input("Informe o fone")
         senha = st.text_input("Informe a senha", type="password")
-        nascimento = dt.combine(st.date_input(label="Informe a data de nascimento"), dt.min.time())
+        nascimento = dt.combine(st.date_input(label="Informe a data de nascimento", format="DD/MM/YYYY", value=dt(2000, 1, 1), min_value=dt(1900, 1, 1), max_value=dt.today()), dt.min.time())
         if st.button("Inserir"):
             try:
                 View.cliente_inserir(nome, email, fone, senha, nascimento)
@@ -53,7 +53,7 @@ class ManterClienteUI:
                     nome = st.text_input("Novo nome", op.get_nome())
                     email = st.text_input("Novo e-mail", op.get_email())
                     fone = st.text_input("Novo fone", op.get_fone())
-                    nascimento = dt.combine(st.date_input(label="Nova data de nascimento"), dt.min.time())
+                    nascimento = dt.combine(st.date_input(label="Nova data de nascimento", format="DD/MM/YYYY", value=op.get_nascimento(), min_value=dt(1900, 1, 1), max_value=dt.today()), dt.min.time())
                 senha = st.text_input("Nova senha", op.get_senha(), type="password")
         if st.button("Atualizar"):
             if op:
@@ -65,9 +65,14 @@ class ManterClienteUI:
     @staticmethod
     def excluir():
         clientes = View.cliente_listar()
-        if len(clientes) == 0: st.write("Nenhum cliente cadastrado")
+        if len(clientes) == 0:
+            st.write("Nenhum profissional cadastrado")
         else:
-            op = st.selectbox("Exclusão de Clientes", clientes, format_func=lambda x: str(x))
+            op = st.selectbox(
+                "Exclusão de Profissionais", 
+                clientes, 
+                format_func=lambda p: f"{p.get_id()} - {p.get_nome()}"
+        )
             if op is not None and st.button("Excluir"):
                 id = op.get_id()
                 if View.cliente_excluir(id):

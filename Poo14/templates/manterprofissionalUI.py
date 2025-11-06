@@ -1,27 +1,37 @@
 import streamlit as st
 import pandas as pd
-from views import View 
+from views import View
 import time
 from datetime import datetime as dt
+
 
 class ManterProfissionalUI:
     @staticmethod
     def main():
         st.header("Cadastro de Profissionais")
-        tab1, tab2, tab3, tab4, tab5 = st.tabs(["Listar", "Inserir", "Atualizar", "Excluir", "Aniversariantes"])
-        with tab1: ManterProfissionalUI.listar()
-        with tab2: ManterProfissionalUI.inserir()
-        with tab3: ManterProfissionalUI.atualizar()
-        with tab4: ManterProfissionalUI.excluir()
-        with tab5: ManterProfissionalUI.aniversarios()
+        tab1, tab2, tab3, tab4, tab5 = st.tabs(
+            ["Listar", "Inserir", "Atualizar", "Excluir", "Aniversariantes"]
+        )
+        with tab1:
+            ManterProfissionalUI.listar()
+        with tab2:
+            ManterProfissionalUI.inserir()
+        with tab3:
+            ManterProfissionalUI.atualizar()
+        with tab4:
+            ManterProfissionalUI.excluir()
+        with tab5:
+            ManterProfissionalUI.aniversarios()
 
     @staticmethod
     def listar():
         profissionais = View.profissional_listar()
-        if len(profissionais) == 0: st.write("Nenhum profissional cadastrado")
+        if len(profissionais) == 0:
+            st.write("Nenhum profissional cadastrado")
         else:
             list_dic = []
-            for obj in profissionais: list_dic.append(obj.to_json())
+            for obj in profissionais:
+                list_dic.append(obj.to_json())
             df = pd.DataFrame(list_dic)
             st.dataframe(df, hide_index=True)
 
@@ -32,9 +42,21 @@ class ManterProfissionalUI:
         senha = st.text_input("Informe a senha", type="password")
         especialidade = st.text_input("Informe o especialidade")
         conselho = st.text_input("Informe o conselho")
-        nascimento = dt.combine(st.date_input(label="Informe a data de nascimento"), dt.min.time())
+        nascimento = dt.combine(
+            st.date_input(
+                label="Informe a data de nascimento",
+                value="today",
+                format="DD/MM/YYYY",
+                min_value=dt(1900, 1, 1),
+                max_value=dt.today(),
+            ),
+            dt.min.time(),
+        )
         if st.button("Inserir"):
-            try: View.profissional_inserir(nome, email, senha, especialidade, conselho, nascimento)
+            try:
+                View.profissional_inserir(
+                    nome, email, senha, especialidade, conselho, nascimento
+                )
             except ValueError as e:
                 st.error(f"Erro ao inserir profissional: {e}")
             else:
@@ -45,19 +67,41 @@ class ManterProfissionalUI:
     @staticmethod
     def atualizar():
         profissionais = View.profissional_listar()
-        if len(profissionais) == 0: st.write("Nenhum profissional cadastrado")
+        if len(profissionais) == 0:
+            st.write("Nenhum profissional cadastrado")
         else:
-            op = st.selectbox("Atualização de Profissionais", profissionais, format_func=lambda x: str(x))
+            op = st.selectbox(
+                "Atualização de Profissionais",
+                profissionais,
+                format_func=lambda p: f"{p.get_id()} - {p.get_nome()}"
+            )
+
             if op is not None:
                 nome = st.text_input("Informe o novo nome", op.get_nome())
                 email = st.text_input("Informe o novo e-mail", op.get_email())
-                senha = st.text_input("Informe a nova senha", op.get_senha(), type="password")
-                especialidade = st.text_input("Informe a nova especialidade", op.get_especialidade())
+                senha = st.text_input(
+                    "Informe a nova senha", op.get_senha(), type="password"
+                )
+                especialidade = st.text_input(
+                    "Informe a nova especialidade", op.get_especialidade()
+                )
                 conselho = st.text_input("Informe o novo conselho", op.get_conselho())
-                nascimento = dt.combine(st.date_input(label="Informe a data de nascimento", key="profissional_nascimento_update", format="DD/MM/YYYY", value=op.get_nascimento()), dt.min.time())
+                nascimento = dt.combine(
+                    st.date_input(
+                        label="Informe a data de nascimento",
+                        key="profissional_nascimento_update",
+                        format="DD/MM/YYYY",
+                        value=op.get_nascimento(),
+                        min_value=dt(1900, 1, 1),
+                        max_value=dt.today(),
+                    ),
+                    dt.min.time(),
+                )
                 if st.button("Atualizar"):
                     id = op.get_id()
-                    View.profissional_atualizar(id, nome, email, senha, especialidade, conselho, nascimento)
+                    View.profissional_atualizar(
+                        id, nome, email, senha, especialidade, conselho, nascimento
+                    )
                     st.success("Profissional atualizado com sucesso")
                     time.sleep(1)
                     st.rerun()
@@ -65,12 +109,18 @@ class ManterProfissionalUI:
     @staticmethod
     def excluir():
         profissionais = View.profissional_listar()
-        if len(profissionais) == 0: st.write("Nenhum profissional cadastrado")
+        if len(profissionais) == 0:
+            st.write("Nenhum profissional cadastrado")
         else:
-            op = st.selectbox("Exclusão de Profissionais", profissionais, format_func=lambda x: str(x))
+            op = st.selectbox(
+                "Exclusão de Profissionais", 
+                profissionais, 
+                format_func=lambda p: f"{p.get_id()} - {p.get_nome()}"
+            )
             if op is not None and st.button("Excluir"):
                 id = op.get_id()
-                try: View.profissional_excluir(id)
+                try:
+                    View.profissional_excluir(id)
                 except ValueError as e:
                     st.error(f"Erro ao excluir profissional: {e}")
                 else:
@@ -80,27 +130,50 @@ class ManterProfissionalUI:
 
     @staticmethod
     def aniversarios():
-        if any(dt.now().strftime("%d/%m") == a['nascimento'][0:5] for a in View.profissional_listar_aniversariantes(0)):
+        if any(
+            dt.now().strftime("%d/%m") == a["nascimento"][0:5]
+            for a in View.profissional_listar_aniversariantes(0)
+        ):
             st.header(f"Aniversariantes do dia: {dt.today().strftime('%d/%m/%Y')}")
-            
+
             for a in View.profissional_listar_aniversariantes(dt.now().month):
-                if dt.now().strftime("%d/%m") == a['nascimento'][0:5]:
+                if dt.now().strftime("%d/%m") == a["nascimento"][0:5]:
                     col1, col2 = st.columns([3, 1])
-                    
+
                     with col1:
                         st.markdown(f"- {a['nome']} - {a['idade']}")
-                    
+
                     with col2:
-                        email = str(View.profissional_listar_id(a["id"])).split(" - ")[2]
-                        nome = a['nome']
-                        
-                        st.link_button("Enviar email", f"mailto:{email}?subject=Feliz Aniversário!&body=Feliz Aniversário, {nome.split()[0]}!", use_container_width=True)
-                    
-                    
-        
+                        email = str(View.profissional_listar_id(a["id"])).split(" - ")[
+                            2
+                        ]
+                        nome = a["nome"]
+
+                        st.link_button(
+                            "Enviar email",
+                            f"mailto:{email}?subject=Feliz Aniversário!&body=Feliz Aniversário, {nome.split()[0]}!",
+                            use_container_width=True,
+                        )
+
         st.header("Profissionais Aniversariantes do Mês")
-        meses = ["Todos", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
-        mes = st.selectbox("Selecione o mês", range(len(meses)), format_func=lambda x: meses[x])
+        meses = [
+            "Todos",
+            "Janeiro",
+            "Fevereiro",
+            "Março",
+            "Abril",
+            "Maio",
+            "Junho",
+            "Julho",
+            "Agosto",
+            "Setembro",
+            "Outubro",
+            "Novembro",
+            "Dezembro",
+        ]
+        mes = st.selectbox(
+            "Selecione o mês", range(len(meses)), format_func=lambda x: meses[x]
+        )
         aniversarios = View.profissional_listar_aniversariantes(mes)
 
         if len(aniversarios) == 0:

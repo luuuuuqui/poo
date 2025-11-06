@@ -77,7 +77,7 @@ class IndexUI:
         if "usuario_id" not in st.session_state:
             IndexUI.menu_visitante()
         else:
-            admin = st.session_state["usuario_nome"] == "admin"
+            admin = st.session_state["usuario_tipo"] == "admin"
             tipo_usuario = st.session_state.get("usuario_tipo", "cliente")
 
             st.sidebar.write(

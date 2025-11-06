@@ -1,6 +1,6 @@
 import streamlit as st
 import time
-import datetime
+import datetime as dt
 import pandas as pd
 
 from views import View
@@ -21,16 +21,16 @@ class PerfilProfissionalUI:
                 "Informe a nova especialidade", op.get_especialidade()
             )
             conselho = st.text_input("Informe o novo conselho", op.get_conselho())
-            nascimento = datetime.datetime.combine(
+            nascimento = dt.datetime.combine(
                 st.date_input(
                     label="Informe a nova data de nascimento",
                     value=(
                         op.get_nascimento().date()
                         if op.get_nascimento()
-                        else datetime.datetime.today().date()
+                        else dt.datetime.today().date()
                     ),
                 ),
-                datetime.datetime.min.time(),
+                dt.datetime.min.time(),
             )
 
         if st.button("Atualizar"):
@@ -91,9 +91,8 @@ class PerfilProfissionalUI:
 
         op = View.profissional_listar_id(st.session_state["usuario_id"])
 
-        datahora = None
         dia = st.date_input(
-            "Dia do atendimento (dd/mm/yy):", value=None, format="DD/MM/YYYY"
+            "Dia do atendimento (dd/mm/yy):", value=None, format="DD/MM/YYYY", min_value=dt.datetime.today()
         )
         inicio = st.time_input("Horário inicial (hh:mm):", value=None)
         fim = st.time_input("Horário final (mm):", value=None)
@@ -105,18 +104,18 @@ class PerfilProfissionalUI:
         
         if st.button(label="Inserir"):
             try:
-                inicio_atendimentos = datetime.datetime.combine(datetime.date.today(), inicio)
-                delta_intervalo = datetime.timedelta(
-                    hours=delta_intervalo.hour, minutes=delta_intervalo.minute
+                inicio_atendimentos = dt.datetime.combine(dt.date.today(), inicio)
+                delta_intervalo = dt.timedelta(
+                    hours=delta_intervalo.hour, minutes=delta_intervalo.minute,
                 )
 
                 while (
                     inicio_atendimentos.time()
-                    <= (datetime.datetime.combine(dia, fim) - delta_intervalo).time()
+                    <= (dt.datetime.combine(dia, fim) - delta_intervalo).time()
                 ):
                     if not op is None: View.horario_inserir(
                         False,
-                        datetime.datetime.combine(dia, inicio_atendimentos.time()),
+                        dt.datetime.combine(dia, inicio_atendimentos.time()),
                         None,
                         None,
                         op.get_id(),

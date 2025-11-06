@@ -10,27 +10,24 @@ class View:
     # autenticação
     @staticmethod
     def autenticar(email, senha):
-        resultado = View.cliente_autenticar(email, senha)
-        if resultado:
+        if resultado := View.cliente_autenticar(email, senha):
             resultado["tipo"] = "cliente"
-            resultado["id"] = resultado["id"]
             return resultado
 
-        resultado = View.profissional_autenticar(email, senha)
-        if resultado:
+        elif resultado := View.profissional_autenticar(email, senha):
             resultado["tipo"] = "profissional"
-            resultado["id"] = resultado["id"]
             return resultado
-
+        
     # Cliente
     @staticmethod
-    def cliente_inserir(
-        nome: str, email: str, fone: str, senha: str, nascimento: dt
-    ):
-        for c in View.cliente_listar() + View.profissional_listar():
-            if c.get_email().lower().strip() == email.lower().strip():
-                raise ValueError("Email já cadastrado.")
-        if email.lower().strip() == "admin":
+    def cliente_inserir(nome: str, email: str, fone: str, senha: str, nascimento: dt):
+        if (
+            any(
+                c.get_email().lower().strip() == email.lower().strip()
+                for c in View.cliente_listar() + View.profissional_listar()
+            )
+            or email.lower().strip() == "admin"
+        ):
             raise ValueError("Email já cadastrado.")
         if fone is None:
             fone = ""
@@ -43,7 +40,7 @@ class View:
     @staticmethod
     def cliente_listar():
         r = ClienteDAO.listar()
-        r.sort(key=lambda obj: obj.get_nome())
+        r.sort(key=lambda obj: obj.get_id())
         return r
 
     @staticmethod
@@ -68,9 +65,9 @@ class View:
     def cliente_autenticar(email, senha):
         for c in View.cliente_listar():
             if c.get_email() == email and c.get_senha() == senha:
-                return {"id": c.get_id(), "nome": c.get_nome()}
+                return {"id": c.get_id(), "nome": c.get_nome(), "email": c.get_email()}
         return None
-    
+
     @staticmethod
     def cliente_listar_aniversariantes(mes):
         clientes = View.cliente_listar()
@@ -99,14 +96,18 @@ class View:
         if not any(
             c.get_email().lower().strip() == "admin" for c in ClienteDAO.listar()
         ):
-            View.cliente_inserir("admin", "admin", "fone", "1234", dt.strptime("2000-01-01", "%Y-%m-%d"))
+            View.cliente_inserir(
+                "admin", "admin", "fone", "1234", dt.strptime("2000-01-01", "%Y-%m-%d")
+            )
 
     @classmethod
     def cliente_admin_criar(cls):
         clientes = cls.cliente_listar()
 
         if not any(c.get_email() == "admin" for c in clientes):
-            cls.cliente_inserir("Administrador", "admin", "admin", "1234", dt(2000, 1, 1))
+            cls.cliente_inserir(
+                "Administrador", "admin", "admin", "1234", dt(2000, 1, 1)
+            )
 
     # Serviços
     @staticmethod
@@ -137,13 +138,18 @@ class View:
     # Profissionais
     @staticmethod
     def profissional_inserir(nome, email, senha, especialidade, conselho, nascimento):
-        for c in View.cliente_listar() + View.profissional_listar():
-            if c.get_email().lower().strip() == email.lower().strip():
-                raise ValueError("Email já cadastrado.")
-        if email.lower().strip() == "admin":
+        if (
+            any(
+                c.get_email().lower().strip() == email.lower().strip()
+                for c in View.cliente_listar() + View.profissional_listar()
+            )
+            or email.lower().strip() == "admin"
+        ):
             raise ValueError("Email já cadastrado.")
         try:
-            profissional = Profissional(0, nome, email, senha, especialidade, conselho, nascimento)
+            profissional = Profissional(
+                0, nome, email, senha, especialidade, conselho, nascimento
+            )
         except ValueError as ve:
             raise ve
         ProfissionalDAO.inserir(profissional)
@@ -151,7 +157,7 @@ class View:
     @staticmethod
     def profissional_listar():
         r = ProfissionalDAO.listar()
-        r.sort(key=lambda obj: obj.get_nome())
+        r.sort(key=lambda obj: obj.get_id())
         return r
 
     @staticmethod
@@ -159,8 +165,12 @@ class View:
         return ProfissionalDAO.listar_id(id)
 
     @staticmethod
-    def profissional_atualizar(id, nome, email, senha, especialidade, conselho, nascimento):
-        profissional = Profissional(id, nome, email, senha, especialidade, conselho, nascimento)
+    def profissional_atualizar(
+        id, nome, email, senha, especialidade, conselho, nascimento
+    ):
+        profissional = Profissional(
+            id, nome, email, senha, especialidade, conselho, nascimento
+        )
         ProfissionalDAO.atualizar(profissional)
 
     @staticmethod
@@ -253,15 +263,15 @@ class View:
     @staticmethod
     def horario_excluir(id):
         horario_existente = View.horario_listar_id(id)
-        
+
         # Verifica se o horário existe
         if horario_existente is None:
             raise ValueError("Horário não encontrado.")
-        
+
         # Verifica se o horário está agendado
         if horario_existente.get_idcliente() is not None:
             raise ValueError("Horário está agendado por um cliente.")
-        
+
         horario = Horario(id, False, dt.now(), "", "", "")
         HorarioDAO.excluir(horario)
 

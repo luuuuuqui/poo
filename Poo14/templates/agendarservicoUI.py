@@ -12,16 +12,30 @@ class AgendarServicoUI:
         if len(profs) == 0:
             st.write("Nenhum profissional cadastrado")
         else:
-            profissional = st.selectbox("Informe o profissional", profs)
+            profissional = st.selectbox(
+                "Informe o profissional", 
+                profs,
+                format_func=lambda p: p.get_nome()
+            )
+            
             if profissional:
                 horarios = View.horario_agendar_horario(profissional.get_id())
 
             if not horarios:
                 st.write("Nenhum horário disponível")
             else:
-                horario = st.selectbox("Informe o horário", horarios)
+                horario = st.selectbox(
+                    "Informe o horário", 
+                    horarios,
+                    format_func=lambda h: h.get_datahora().strftime("%d/%m/%Y %H:%M")
+                )
+                
                 servicos = View.servico_listar()
-                servico = st.selectbox("Informe o serviço", servicos)
+                servico = st.selectbox(
+                    "Informe o serviço", 
+                    servicos,
+                    format_func=lambda s: s.get_descricao()
+                )
 
                 if st.button("Agendar"):
                     if horario and servico and profissional: 
