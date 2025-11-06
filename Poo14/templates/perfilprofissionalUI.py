@@ -98,6 +98,9 @@ class PerfilProfissionalUI:
         inicio = st.time_input("Horário inicial (hh:mm):", value=None)
         fim = st.time_input("Horário final (mm):", value=None)
         delta_intervalo = st.time_input("Intervalo entre atendimentos (hh:mm):", value=None)
+        
+        if not (dia and inicio and fim and delta_intervalo):
+            raise ValueError("Preencha todos os campos de data e hora.")
 
         if st.button("Inserir"):
             try:
@@ -110,7 +113,7 @@ class PerfilProfissionalUI:
                     inicio_atendimentos.time()
                     <= (datetime.datetime.combine(dia, fim) - delta_intervalo).time()
                 ):
-                    View.horario_inserir(
+                    if not op is None: View.horario_inserir(
                         False,
                         datetime.datetime.combine(dia, inicio_atendimentos.time()),
                         None,
@@ -144,36 +147,38 @@ class PerfilProfissionalUI:
                 op = View.horario_listar_id(op.get_id())
 
                 clientes = View.cliente_listar()
-                cliente_index = next(
-                    (
-                        i
-                        for i, c in enumerate(clientes)
-                        if c.get_id() == op.get_idcliente()
-                    ),
-                    0,
-                )
-                cliente = st.selectbox(
-                    "Selecione o cliente",
-                    clientes,
-                    index=cliente_index,
-                    format_func=lambda x: str(x),
-                    key=f"cliente_{op.get_id()}",
-                    disabled=True,
-                )
-
-                if st.button("Confirmar", key=f"btn_atualizar_{op.get_id()}"):
-                    try:
-                        View.horario_atualizar(
-                            op.get_id(),
-                            True,
-                            op.get_datahora(),
-                            cliente.get_id(),
-                            op.get_idservico(),
-                            op.get_idprofissional(),
-                        )
-                    except ValueError as e:
-                        st.error(f"Erro ao atualizar o horário: {e}")
-                    else:
-                        st.success("Horário atualizado com sucesso")
-                        time.sleep(1)
-                        st.rerun()
+                if not op is None:
+                    cliente_index = next(
+                        (
+                            i
+                            for i, c in enumerate(clientes)
+                            if c.get_id() == op.get_idcliente()
+                        ),
+                        0,
+                    )
+                if op is not None:
+                    cliente = st.selectbox(
+                        "Selecione o cliente",
+                        clientes,
+                        index=cliente_index,
+                        format_func=lambda x: str(x),
+                        key=f"cliente_{op.get_id()}",
+                        disabled=True,
+                    )
+                    if st.button("Confirmar", key=f"btn_atualizar_{op.get_id()}"):
+                        try:
+                            if cliente is not None:
+                                View.horario_atualizar(
+                                    op.get_id(),
+                                    True,
+                                    op.get_datahora(),
+                                    cliente.get_id(),
+                                    op.get_idservico(),
+                                    op.get_idprofissional(),
+                                )
+                        except ValueError as e:
+                            st.error(f"Erro ao atualizar o horário: {e}")
+                        else:
+                            st.success("Horário atualizado com sucesso")
+                            time.sleep(1)
+                            st.rerun()
