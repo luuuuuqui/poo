@@ -68,12 +68,12 @@ class Cliente:
         
     def to_json(self) -> dict:
         dic = {
-            "id": int(self.__id),
+            "id": self.__id,
             "nome": self.__nome,
             "email": self.__email,
             "fone": self.__fone,
             "senha": self.__senha,
-            "nascimento": self.__nascimento,
+            "nascimento": self.__nascimento.isoformat() if isinstance(self.__nascimento, dt) else None
         }
         return dic
 

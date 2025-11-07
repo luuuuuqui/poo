@@ -1,90 +1,98 @@
 [
-  {
-    "id": 0,
-    "nome": "admin",
-    "email": "admin",
-    "fone": "fone",
-    "senha": "1234",
-    "nascimento": "1970-01-01T00:00:00"
-  },
-  {
-    "id": 1,
-    "nome": "Maria Nilma da Silva",
-    "email": "nilmafotos@example.com",
-    "fone": "fone",
-    "senha": "1234",
-    "nascimento": "1985-01-29T00:00:00"
-  },
-  {
-    "id": 2,
-    "nome": "João Pedro Souza",
-    "email": "joao.souza@example.com",
-    "fone": "(11) 98765-4321",
-    "senha": "joao123",
-    "nascimento": "1992-05-15T00:00:00"
-  },
-  {
-    "id": 3,
-    "nome": "Ana Clara Oliveira",
-    "email": "ana.clara@example.com",
-    "fone": "(21) 99887-6655",
-    "senha": "anaclara_p",
-    "nascimento": "1978-11-20T00:00:00"
-  },
-  {
-    "id": 4,
-    "nome": "Roberto Gomes Ferreira",
-    "email": "roberto.g@example.com",
-    "fone": "(31) 97766-5544",
-    "senha": "roberto456",
-    "nascimento": "2000-03-10T00:00:00"
-  },
-  {
-    "id": 5,
-    "nome": "Carla Regina Lima",
-    "email": "carlalima@example.com",
-    "fone": "(47) 96655-4433",
-    "senha": "carlareg",
-    "nascimento": "1989-07-03T00:00:00"
-  },
-  {
-    "id": 6,
-    "nome": "Eduardo Santos Neves",
-    "email": "eduardo.neves@example.com",
-    "fone": "(61) 95544-3322",
-    "senha": "edusantos",
-    "nascimento": "1965-09-28T00:00:00"
-  },
-  {
-    "id": 7,
-    "nome": "Fernanda Alves Rocha",
-    "email": "fernanda.ar@example.com",
-    "fone": "(85) 94433-2211",
-    "senha": "feralves",
-    "nascimento": "1997-12-05T00:00:00"
-  },
-  {
-    "id": 8,
-    "nome": "Guilherme Mello",
-    "email": "gui.mello@example.com",
-    "fone": "(51) 93322-1100",
-    "senha": "guilhermep",
-    "nascimento": "1980-02-14T00:00:00"
-  },
-  {
-    "id": 9,
-    "nome": "Heloísa Dantas",
-    "email": "heloisa.d@example.com",
-    "fone": "(71) 92211-0099",
-    "senha": "heloisad",
-    "nascimento": "1995-06-21T00:00:00"
-  },
-  {
-    "id": 10,
-    "nome": "Caio Menezes",
-    "email": "caiom@example.com",
-    "fone": "(81) 98844-5566",
-    "senha": "caiomenes",
-    "nascimento": "2002-11-06T00:00:00"
-  }
+    {
+        "id": 0,
+        "nome": "admin",
+        "email": "admin",
+        "fone": "fone",
+        "senha": "1234",
+        "nascimento": "1970-01-01T00:00:00"
+    },
+    {
+        "id": 1,
+        "nome": "Maria Nilma da Silva",
+        "email": "nilmafotos@example.com",
+        "fone": "fone",
+        "senha": "1234",
+        "nascimento": "1985-01-29T00:00:00"
+    },
+    {
+        "id": 2,
+        "nome": "Jo\u00e3o Pedro Souza",
+        "email": "joao.souza@example.com",
+        "fone": "(11) 98765-4321",
+        "senha": "joao123",
+        "nascimento": "1992-05-15T00:00:00"
+    },
+    {
+        "id": 3,
+        "nome": "Ana Clara Oliveira",
+        "email": "ana.clara@example.com",
+        "fone": "(21) 99887-6655",
+        "senha": "anaclara_p",
+        "nascimento": "1978-11-20T00:00:00"
+    },
+    {
+        "id": 4,
+        "nome": "Roberto Gomes Ferreira",
+        "email": "roberto.g@example.com",
+        "fone": "(31) 97766-5544",
+        "senha": "roberto456",
+        "nascimento": "2000-03-10T00:00:00"
+    },
+    {
+        "id": 5,
+        "nome": "Carla Regina Lima",
+        "email": "carlalima@example.com",
+        "fone": "(47) 96655-4433",
+        "senha": "carlareg",
+        "nascimento": "1989-07-03T00:00:00"
+    },
+    {
+        "id": 6,
+        "nome": "Eduardo Santos Neves",
+        "email": "eduardo.neves@example.com",
+        "fone": "(61) 95544-3322",
+        "senha": "edusantos",
+        "nascimento": "1965-09-28T00:00:00"
+    },
+    {
+        "id": 7,
+        "nome": "Fernanda Alves Rocha",
+        "email": "fernanda.ar@example.com",
+        "fone": "(85) 94433-2211",
+        "senha": "feralves",
+        "nascimento": "1997-12-05T00:00:00"
+    },
+    {
+        "id": 8,
+        "nome": "Guilherme Mello",
+        "email": "gui.mello@example.com",
+        "fone": "(51) 93322-1100",
+        "senha": "guilhermep",
+        "nascimento": "1980-02-14T00:00:00"
+    },
+    {
+        "id": 9,
+        "nome": "Helo\u00edsa Dantas",
+        "email": "heloisa.d@example.com",
+        "fone": "(71) 92211-0099",
+        "senha": "heloisad",
+        "nascimento": "1995-06-21T00:00:00"
+    },
+    {
+        "id": 10,
+        "nome": "Caio Menezes",
+        "email": "caiom@example.com",
+        "fone": "(81) 98844-5566",
+        "senha": "caiomenes",
+        "nascimento": "2002-11-06T00:00:00"
+    },
+    {
+        "id": 11,
+        "nome": "Lucas Gabriel da Silva Duarte",
+        "email": "duarte.lucas@academico.ifrn.edu.br",
+        "fone": "84967676767",
+        "senha": "oigilbert",
+        "nascimento": "2009-06-04T00:00:00"
+    }
 ]

@@ -14,22 +14,34 @@ class AbrirContaUI:
         senha = st.text_input("Informe a senha", type="password")
 
         nascimento = dt.combine(
-            st.date_input(label="Informe a data de nascimento", format="DD/MM/YYYY"), dt.min.time()
+            date=st.date_input(
+                label="Informe a data de nascimento",
+                format="DD/MM/YYYY",
+                value=dt(2000, 1, 1),
+                min_value=dt(1900, 1, 1),
+                max_value=dt.today(),
+            ),
+            time=dt.min.time(),
         )
-        if not nome:
-            st.error("O nome deve ser preenchido.")
-        elif not email:
-            st.error("O e-mail deve ser preenchido.")
-        elif not senha:
-            st.error("A senha deve ser preenchida.")
-        elif nascimento >= dt.now():
-            st.error("A data de nascimento deve ser no passado.")
-        elif st.button("Inserir"):
-            try:
-                View.cliente_inserir(nome, email, fone, senha, nascimento)
-            except ValueError as e:
-                st.error(f"Erro ao criar conta: {e}")
+        
+        if st.button("Inserir"):
+            if nome and email and senha and nascimento:
+                if not fone: fone = "0"
+                try:
+                    View.cliente_inserir(nome, email, fone, senha, nascimento)
+                    st.success("Conta criada com sucesso")
+                    time.sleep(1)
+                    st.rerun()
+                except ValueError as e:
+                    st.error(f"Erro ao criar conta: {e}")
             else:
-                st.success("Conta criada com sucesso")
-                time.sleep(1)
-                st.rerun()
+                if not nome:
+                    st.error("O nome deve ser preenchido.")
+                if not email:
+                    st.error(body="O e-mail deve ser preenchido.")
+                if not senha:
+                    st.error("A senha deve ser preenchida.")
+                if not nascimento:
+                    st.error("A data de nascimento deve ser preenchida.")
+                elif nascimento >= dt.now():
+                    st.error("A data de nascimento deve ser no passado.")

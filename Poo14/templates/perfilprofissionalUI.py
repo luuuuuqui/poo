@@ -1,6 +1,6 @@
 import streamlit as st
 import time
-from datetime import datetime as dt
+from datetime import datetime as dt, timedelta as deltat
 import pandas as pd
 
 from views import View
@@ -105,10 +105,10 @@ class PerfilProfissionalUI:
         )
 
         if st.button(label="Inserir"):
-            if (dia and inicio and fim and delta_intervalo):
+            if dia and inicio and fim and delta_intervalo:
                 try:
                     inicio_atendimentos = dt.combine(dt.today(), inicio)
-                    delta_intervalo = dt.timedelta(
+                    delta_intervalo = deltat(
                         hours=delta_intervalo.hour,
                         minutes=delta_intervalo.minute,
                     )
@@ -148,7 +148,9 @@ class PerfilProfissionalUI:
             st.write("Nenhum horário para confirmar.")
         else:
             op = st.selectbox(
-                "Atualização de Horários", horarios, format_func=lambda x: str(x)
+                "Atualização de Horários",
+                horarios,
+                format_func=lambda x: x.get_datahora().strftime("%d/%m/%Y %H:%M"),
             )
             if op is not None:
                 op = View.horario_listar_id(op.get_id())
@@ -168,7 +170,7 @@ class PerfilProfissionalUI:
                         "Selecione o cliente",
                         clientes,
                         index=cliente_index,
-                        format_func=lambda x: str(x),
+                        format_func=lambda x: x.get_nome(),
                         key=f"cliente_{op.get_id()}",
                         disabled=True,
                     )
