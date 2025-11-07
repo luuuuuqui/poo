@@ -31,7 +31,10 @@ class ManterProfissionalUI:
         else:
             list_dic = []
             for obj in profissionais:
+                obj.set_senha("*" * len(obj.get_senha()))
+                obj.set_nascimento(dt.strftime(obj.get_nascimento(), "%d/%m/%Y"))
                 list_dic.append(obj.to_json())
+
             df = pd.DataFrame(list_dic)
             st.dataframe(df, hide_index=True)
 
@@ -45,7 +48,7 @@ class ManterProfissionalUI:
         nascimento = dt.combine(
             st.date_input(
                 label="Informe a data de nascimento",
-                value="today",
+                value=dt(2000, 1, 1),
                 format="DD/MM/YYYY",
                 min_value=dt(1900, 1, 1),
                 max_value=dt.today(),
@@ -73,7 +76,7 @@ class ManterProfissionalUI:
             op = st.selectbox(
                 "Atualização de Profissionais",
                 profissionais,
-                format_func=lambda p: f"{p.get_id()} - {p.get_nome()}"
+                format_func=lambda p: f"{p.get_id()} - {p.get_nome()}",
             )
 
             if op is not None:
@@ -113,9 +116,9 @@ class ManterProfissionalUI:
             st.write("Nenhum profissional cadastrado")
         else:
             op = st.selectbox(
-                "Exclusão de Profissionais", 
-                profissionais, 
-                format_func=lambda p: f"{p.get_id()} - {p.get_nome()}"
+                "Exclusão de Profissionais",
+                profissionais,
+                format_func=lambda p: f"{p.get_id()} - {p.get_nome()}",
             )
             if op is not None and st.button("Excluir"):
                 id = op.get_id()

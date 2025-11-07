@@ -21,7 +21,10 @@ class ManterClienteUI:
         if len(clientes) == 0: st.write("Nenhum cliente cadastrado")
         else:
             list_dic = []
-            for obj in clientes: list_dic.append(obj.to_json())
+            for obj in clientes:
+                obj.set_senha("*" * len(obj.get_senha()))
+                obj.set_nascimento(dt.strftime(obj.get_nascimento(), "%d/%m/%Y"))
+                list_dic.append(obj.to_json())
             df = pd.DataFrame(list_dic)
             st.dataframe(df, hide_index=True)
 
@@ -47,7 +50,11 @@ class ManterClienteUI:
         clientes = View.cliente_listar()
         if len(clientes) == 0: st.write("Nenhum cliente cadastrado")
         else:
-            op = st.selectbox("Atualização de Clientes", clientes)
+            op = st.selectbox(
+                "Atualização de Profissionais",
+                clientes,
+                format_func=lambda p: f"{p.get_id()} - {p.get_nome()}"
+            )
             if op:
                 if st.session_state["usuario_id"] != op.get_id():
                     nome = st.text_input("Novo nome", op.get_nome())
@@ -80,32 +87,53 @@ class ManterClienteUI:
                 else: st.error("Erro ao excluir cliente. Tente novamente.")
                 time.sleep(1)
                 st.rerun()
-
     @staticmethod
     def aniversarios():
-        if any(dt.now().strftime("%d/%m") == a['nascimento'][0:5] for a in View.cliente_listar_aniversariantes(0)):
+        dt_hoje = dt.now().strftime("%d/%m")
+        aniversariantes_mes_atual = View.cliente_listar_aniversariantes(dt.now().month)
+        
+        aniversariantes_hoje = [
+            a for a in aniversariantes_mes_atual 
+            if a['nascimento'][0:5] == dt_hoje
+        ]
+        
+        if aniversariantes_hoje:
             st.header(f"Aniversariantes do dia: {dt.today().strftime('%d/%m/%Y')}")
             
-            for a in View.cliente_listar_aniversariantes(dt.now().month):
-                if dt.now().strftime("%d/%m") == a['nascimento'][0:5]:
-                    col1, col2 = st.columns([3, 1])
+            for aniversariante in aniversariantes_hoje:
+                col1, col2 = st.columns([3, 1])
+                
+                with col1:
+                    st.markdown(f"- {aniversariante['nome']} - {aniversariante['idade']}")
+                
+                with col2:
+                    aniversariante_info = str(View.cliente_listar_id(aniversariante["id"]))
+                    email = aniversariante_info.split(" - ")[2]
+                    nome = aniversariante['nome'].split()[0]
                     
-                    with col1:
-                        st.markdown(f"- {a['nome']} - {a['idade']}")
+                    mailto_link = (
+                        f"mailto:{email}"
+                        f"?subject=Feliz Aniversário!"
+                        f"&body=Feliz Aniversário, {nome}!"
+                    )
                     
-                    with col2:
-                        email = str(View.cliente_listar_id(a["id"])).split(" - ")[2]
-                        nome = a['nome']
-                        
-                        st.link_button("Enviar email", f"mailto:{email}?subject=Feliz Aniversário!&body=Feliz Aniversário, {nome.split()[0]}!", use_container_width=True)
-                    
-                    
+                    st.link_button("Enviar email", mailto_link, use_container_width=True)
         
         st.header("Profissionais Aniversariantes do Mês")
-        meses = ["Todos", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
-        mes = st.selectbox("Selecione o mês", range(len(meses)), format_func=lambda x: meses[x])
-        aniversarios = View.cliente_listar_aniversariantes(mes)
-
+        
+        meses = [
+            "Todos", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", 
+            "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+        ]
+        
+        mes_selecionado = st.selectbox(
+            "Selecione o mês", 
+            range(len(meses)), 
+            format_func=lambda x: meses[x]
+        )
+        
+        aniversarios = View.cliente_listar_aniversariantes(mes_selecionado)
+        
         if len(aniversarios) == 0:
             st.write("Nenhum cliente faz aniversário neste mês.")
         else:

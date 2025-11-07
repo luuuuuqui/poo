@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from views import View
 import time
-import datetime
+from datetime import datetime as dt
 
 
 class ManterHorarioUI:
@@ -58,7 +58,7 @@ class ManterHorarioUI:
         datahora = None
 
         if d is not None and t is not None:
-            datahora = datetime.datetime(
+            datahora = dt(
                 d.year, d.month, d.day, t.hour, t.minute, t.second
             )
             st.success(f"Data e hora selecionada: {datahora}")
@@ -137,7 +137,7 @@ class ManterHorarioUI:
                 )
                 datahora = None
                 if d is not None and t is not None:
-                    datahora = datetime.datetime(
+                    datahora = dt(
                         d.year, d.month, d.day, t.hour, t.minute, t.second
                     )
 

@@ -1,6 +1,6 @@
 import streamlit as st
 import time
-import datetime as dt
+from datetime import datetime as dt
 import pandas as pd
 
 from views import View
@@ -21,16 +21,17 @@ class PerfilProfissionalUI:
                 "Informe a nova especialidade", op.get_especialidade()
             )
             conselho = st.text_input("Informe o novo conselho", op.get_conselho())
-            nascimento = dt.datetime.combine(
+            nascimento = dt.combine(
                 st.date_input(
                     label="Informe a nova data de nascimento",
                     value=(
                         op.get_nascimento().date()
                         if op.get_nascimento()
-                        else dt.datetime.today().date()
+                        else dt.today().date()
                     ),
+                    format="DD/MM/YYYY",
                 ),
-                dt.datetime.min.time(),
+                dt.min.time(),
             )
 
         if st.button("Atualizar"):
@@ -92,42 +93,47 @@ class PerfilProfissionalUI:
         op = View.profissional_listar_id(st.session_state["usuario_id"])
 
         dia = st.date_input(
-            "Dia do atendimento (dd/mm/yy):", value=None, format="DD/MM/YYYY", min_value=dt.datetime.today()
+            "Dia do atendimento (dd/mm/yy):",
+            value=None,
+            format="DD/MM/YYYY",
+            min_value=dt.today(),
         )
         inicio = st.time_input("Horário inicial (hh:mm):", value=None)
         fim = st.time_input("Horário final (mm):", value=None)
-        delta_intervalo = st.time_input("Intervalo entre atendimentos (hh:mm):", value=None)
-        
-        if not (dia and inicio and fim and delta_intervalo):
-            st.error("Preencha todos os campos de data e hora.")
-        
-        
+        delta_intervalo = st.time_input(
+            "Intervalo entre atendimentos (hh:mm):", value=None
+        )
+
         if st.button(label="Inserir"):
-            try:
-                inicio_atendimentos = dt.datetime.combine(dt.date.today(), inicio)
-                delta_intervalo = dt.timedelta(
-                    hours=delta_intervalo.hour, minutes=delta_intervalo.minute,
-                )
-
-                while (
-                    inicio_atendimentos.time()
-                    <= (dt.datetime.combine(dia, fim) - delta_intervalo).time()
-                ):
-                    if not op is None: View.horario_inserir(
-                        False,
-                        dt.datetime.combine(dia, inicio_atendimentos.time()),
-                        None,
-                        None,
-                        op.get_id(),
+            if (dia and inicio and fim and delta_intervalo):
+                try:
+                    inicio_atendimentos = dt.combine(dt.today(), inicio)
+                    delta_intervalo = dt.timedelta(
+                        hours=delta_intervalo.hour,
+                        minutes=delta_intervalo.minute,
                     )
-                    inicio_atendimentos += delta_intervalo
-                st.success("Horário inserido com sucesso")
-            except ValueError as e:
-                st.error(f"Erro ao inserir horário: {e}")
-            else:
-                time.sleep(1)
-                st.rerun()
 
+                    while (
+                        inicio_atendimentos.time()
+                        <= (dt.combine(dia, fim) - delta_intervalo).time()
+                    ):
+                        if not op is None:
+                            View.horario_inserir(
+                                False,
+                                dt.combine(dia, inicio_atendimentos.time()),
+                                None,
+                                None,
+                                op.get_id(),
+                            )
+                        inicio_atendimentos += delta_intervalo
+                    st.success("Horário inserido com sucesso")
+                except ValueError as e:
+                    st.error(f"Erro ao inserir horário: {e}")
+                else:
+                    time.sleep(1)
+                    st.rerun()
+            else:
+                st.error("Preencha todos os campos de data e hora.")
 
     @staticmethod
     def confirmar():
