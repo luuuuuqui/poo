@@ -1,4 +1,5 @@
 import json
+import os
 from datetime import datetime as dt
 from .dao import DAO
 
@@ -8,6 +9,8 @@ class Cliente:
         self, id: int, nome: str, email: str, fone: str, senha: str, nascimento: dt
     ):
         # validações individuais para campos obrigatórios
+        if not isinstance(id, int):
+            raise ValueError("ID não é int.")
         if nome is None or not str(nome).strip():
             raise ValueError("Nome deve ser preenchido.")
         if email is None or not str(email).strip():
@@ -62,10 +65,10 @@ class Cliente:
 
     def set_nascimento(self, nascimento) -> None:
         self.__nascimento = nascimento
-
+        
     def to_json(self) -> dict:
         dic = {
-            "id": self.__id,
+            "id": int(self.__id),
             "nome": self.__nome,
             "email": self.__email,
             "fone": self.__fone,
@@ -78,9 +81,12 @@ class Cliente:
     def from_json(dic) -> object:
         if isinstance(dic["nascimento"], str):
             nasc = dt.fromisoformat(dic["nascimento"])
+        else:
+            nasc = dic["nascimento"]
         return Cliente(
             dic["id"], dic["nome"], dic["email"], dic["fone"], dic["senha"], nasc
         )
+
 
     def __str__(self) -> str:
         return f"{self.__id} - {self.__nome} - {self.__email} - {self.__fone} - {self.__senha} - {self.__nascimento}"
@@ -101,5 +107,8 @@ class ClienteDAO(DAO):
 
     @classmethod
     def salvar(cls) -> None:
-        with open("clientes.json", mode="w") as arquivo:
-            json.dump(cls._objetos, arquivo, default=Cliente.to_json)
+        temp_name = "clientes_temp.json"
+        with open(temp_name, "w") as arquivo:
+            json.dump(cls._objetos, arquivo, default=Cliente.to_json, indent=4)
+        os.replace(temp_name, "clientes.json")
+

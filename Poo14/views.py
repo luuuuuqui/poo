@@ -32,10 +32,9 @@ class View:
         if fone is None:
             fone = ""
         try:
-            cliente = Cliente(0, nome, email, fone, senha, nascimento)
+            ClienteDAO.inserir(Cliente(0, nome, email, fone, senha, nascimento))
         except ValueError as ve:
             raise ve
-        ClienteDAO.inserir(cliente)
 
     @staticmethod
     def cliente_listar():
