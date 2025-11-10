@@ -53,8 +53,6 @@ class ManterClienteUI:
             ),
             dt.min.time(),
         )
-        st.write(nascimento)
-        st.write(type(nascimento))
         if st.button("Inserir"):
             try:
                 View.cliente_inserir(nome, email, fone, senha, nascimento)
@@ -145,7 +143,7 @@ class ManterClienteUI:
                             use_container_width=True,
                         )
 
-        st.header("Profissionais Aniversariantes do Mês")
+        st.header("Clientes Aniversariantes do Mês")
         meses = [
             "Todos",
             "Janeiro",

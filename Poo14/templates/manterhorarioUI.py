@@ -61,9 +61,6 @@ class ManterHorarioUI:
             datahora = dt(
                 d.year, d.month, d.day, t.hour, t.minute, t.second
             )
-            st.success(f"Data e hora selecionada: {datahora}")
-        else:
-            st.warning("Selecione o dia e o horário do atendimento.")
 
         clientes = View.cliente_listar()
         if len(clientes) == 0:
@@ -88,10 +85,6 @@ class ManterHorarioUI:
             profissional = st.selectbox(
                 "Selecione o profissional", profissionais, format_func=lambda x: str(x)
             )
-
-        if not datahora and cliente and not servico and not profissional:
-            st.warning("Preencha todos os campos")
-
         if st.button("Inserir"):
             if datahora and cliente and servico and profissional:
                 try:
@@ -108,6 +101,8 @@ class ManterHorarioUI:
                     st.success("Horário inserido com sucesso")
                     time.sleep(1)
                     st.rerun()
+            else:
+                st.error("Preencha todas os campos.")
 
     @staticmethod
     def atualizar():

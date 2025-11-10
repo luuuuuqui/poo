@@ -57,7 +57,7 @@ class View:
             raise ValueError(
                 "Cliente possui horários agendados e não pode ser excluído."
             )
-        cliente = Cliente(id, "", "", "", "", dt.now())
+        cliente = Cliente(id, ".", ".", ".", ".", dt.now())
         ClienteDAO.excluir(cliente)
 
     @staticmethod
@@ -178,7 +178,7 @@ class View:
             raise ValueError(
                 "Profissional possui horários agendados e não pode ser excluído."
             )
-        profissional = Profissional(id, "", "", "", "", "", dt.now())
+        profissional = Profissional(id, ".", ".", ".", ".", ".", dt.now())
         ProfissionalDAO.excluir(profissional)
 
     @staticmethod
