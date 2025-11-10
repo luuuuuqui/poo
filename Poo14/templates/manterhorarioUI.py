@@ -111,8 +111,11 @@ class ManterHorarioUI:
             st.write("Nenhum horário cadastrado")
         else:
             op = st.selectbox(
-                "Atualização de Horários", horarios, format_func=lambda x: str(x)
+                "Atualização de Horários", 
+                horarios, 
+                format_func=lambda x: f"{x.get_id()} - {x.get_datahora().strftime('%d/%m/%Y %H:%M') if x.get_datahora() else 'Sem data'} - Cliente: {x.get_idcliente()} - Serviço: {x.get_idservico()}"
             )
+            
             if op is not None:
                 confirmado = st.checkbox(
                     "Confirmado",
@@ -149,7 +152,7 @@ class ManterHorarioUI:
                     "Selecione o cliente",
                     clientes,
                     index=cliente_index,
-                    format_func=lambda x: str(x),
+                    format_func=lambda x: f"{x.get_id()} - {x.get_nome()}",
                     key=f"cliente_{op.get_id()}",
                 )
 
@@ -166,7 +169,7 @@ class ManterHorarioUI:
                     "Selecione o serviço",
                     servicos,
                     index=servico_index,
-                    format_func=lambda x: str(x),
+                    format_func=lambda x: f"{x.get_id()} - {x.get_descricao()}",
                     key=f"servico_{op.get_id()}",
                 )
 
@@ -183,7 +186,7 @@ class ManterHorarioUI:
                     "Selecione o profissional",
                     profissionais,
                     index=profissional_index,
-                    format_func=lambda x: str(x),
+                    format_func=lambda x: f"{x.get_id()} - {x.get_nome()}",
                     key=f"profissional_{op.get_id()}",
                 )
 
