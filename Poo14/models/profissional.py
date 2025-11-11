@@ -85,7 +85,7 @@ class Profissional:
             "senha": self.__senha,
             "especialidade": self.__especialidade,
             "conselho": self.__conselho,
-            "nascimento": self.__nascimento
+            "nascimento": self.__nascimento.isoformat() if isinstance(self.__nascimento, dt) else self.__nascimento
         }
         return dic
 
