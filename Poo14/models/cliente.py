@@ -73,11 +73,7 @@ class Cliente:
             "email": self.__email,
             "fone": self.__fone,
             "senha": self.__senha,
-            "nascimento": (
-                self.__nascimento.isoformat()
-                if isinstance(self.__nascimento, dt)
-                else None
-            ),
+            "nascimento": self.__nascimento
         }
         return dic
 
