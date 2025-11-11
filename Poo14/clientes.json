@@ -8,14 +8,6 @@
         "nascimento": "1970-01-01T00:00:00"
     },
     {
-        "id": 1,
-        "nome": "Maria Nilma da Silva",
-        "email": "nilmafotos@example.com",
-        "fone": "fone",
-        "senha": "1234",
-        "nascimento": "1985-01-29T00:00:00"
-    },
-    {
         "id": 2,
         "nome": "Jo\u00e3o Pedro Souza",
         "email": "joao.souza@example.com",
@@ -96,11 +88,11 @@
         "nascimento": "2009-06-04T00:00:00"
     },
     {
-        "id": 12,
-        "nome": "luvapedreiro",
-        "email": "luvapedreiro@example.com",
-        "fone": "40028922",
+        "id": 1,
+        "nome": "Marcos Vieira Costa",
+        "email": "marcos.vieira@example.com",
+        "fone": "(11) 94567-8901",
         "senha": "1234",
-        "nascimento": "2000-01-01T00:00:00"
+        "nascimento": "1988-08-12T00:00:00"
     }
 ]

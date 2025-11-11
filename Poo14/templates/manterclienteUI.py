@@ -93,10 +93,11 @@ class ManterClienteUI:
         if st.button("Atualizar"):
             if op:
                 id = op.get_id()
-                if View.cliente_atualizar(id, nome, email, fone, senha, nascimento):
+                try:
+                    View.cliente_atualizar(id, nome, email, fone, senha, nascimento)
                     st.success("Cliente atualizado com sucesso")
-                else:
-                    st.error("Erro ao atualizar cliente. Tente novamente.")
+                except ValueError as e:
+                    st.error(f"Erro ao atualizar cliente. {e}.")
 
     @staticmethod
     def excluir():
@@ -111,10 +112,11 @@ class ManterClienteUI:
             )
             if op is not None and st.button("Excluir"):
                 id = op.get_id()
-                if View.cliente_excluir(id):
+                try:
+                    View.cliente_excluir(id)
                     st.success("Cliente excluído com sucesso")
-                else:
-                    st.error("Erro ao excluir cliente. Tente novamente.")
+                except ValueError as e:
+                    st.error(f"Erro ao excluir cliente. {e}.")
                 time.sleep(1)
                 st.rerun()
 
